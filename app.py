@@ -192,6 +192,7 @@ def delete_patient(patient_id):
 
 # ---------- Appointments ----------
 
+
 @app.route('/appointments', methods=['GET', 'POST'])
 @login_required
 def appointments():
@@ -239,8 +240,12 @@ def appointments():
 @login_required
 def update_appointment(appointment_id):
     db = get_db()
-
+    
     if request.method == 'POST':
+        if request.form['appointment_status'] == 'Completed':
+            db.close()
+            flash('Use the Complete button to complete an appointment.', 'error')
+            return redirect(url_for('appointments'))
         try:
             db.execute(
                 "UPDATE appointments SET patient_id = ?, appointment_date = ?, "
@@ -275,9 +280,15 @@ def update_appointment(appointment_id):
 @login_required
 def delete_appointment(appointment_id):
     db = get_db()
-    db.execute("DELETE FROM appointments WHERE appointment_id = ?", (appointment_id,))
-    db.commit()
-    flash('Appointment deleted.', 'success')
+    try:
+        db.execute("DELETE FROM appointments WHERE appointment_id = ?", (appointment_id,))
+        db.commit()
+        flash('Appointment deleted.', 'success')
+    except sqlite3.IntegrityError:
+        db.rollback()
+        flash('Cannot delete: this appointment has a recorded visit.', 'error')
+    finally:
+        db.close()
     return redirect(url_for('appointments'))
 
 
