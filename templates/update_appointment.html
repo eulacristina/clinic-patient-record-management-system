@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    
+    <h1>Update Appointment</h1>
+    <a href="{{ url_for('appointments') }}">&larr; Back to appointments</a>
+
+    <form method="POST" action="{{ url_for('update_appointment', appointment_id=appointment.appointment_id) }}">
+        <label for="patient_id">Patient</label>
+        <select name="patient_id" id="patient_id" required>
+            {% for p in patients %}
+            <option value="{{ p.patient_id }}" {% if p.patient_id == appointment.patient_id %}selected{% endif %}>
+                {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="appointment_date">Date</label>
+        <input type="date" name="appointment_date" id="appointment_date" value="{{ appointment.appointment_date }}" required>
+
+        <label for="appointment_time">Time</label>
+        <input type="time" name="appointment_time" id="appointment_time" value="{{ appointment.appointment_time }}" required>
+
+        <label for="appointment_status">Status</label>
+        <select name="appointment_status" id="appointment_status" required>
+            <option value="Scheduled" {% if appointment.appointment_status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
+            <option value="Completed" {% if appointment.appointment_status == 'Completed' %}selected{% endif %}>Completed</option>
+            <option value="Cancelled" {% if appointment.appointment_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+        </select>
+
+        <button type="submit">Update Appointment</button>
+    </form>
+</body>
+</html>

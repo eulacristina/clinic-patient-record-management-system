@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Patient</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    
+    <h1>Edit Patient</h1>
+    <p>Code: <strong>{{ patient.patient_code }}</strong> (cannot be changed)</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+        <label>First name</label>
+        <input type="text" name="firstName" value="{{ patient.firstName }}" required><br>
+
+        <label>Last name</label>
+        <input type="text" name="lastName" value="{{ patient.lastName }}" required><br>
+
+        <label>Age</label>
+        <input type="number" name="age" value="{{ patient.age }}" min="1" max="129" required><br>
+
+        <label>Gender</label>
+        <select name="gender">
+            {% for g in ['Male', 'Female', 'Other'] %}
+            <option value="{{ g }}" {{ 'selected' if patient.gender == g }}>{{ g }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label>Contact</label>
+        <input type="text" name="contact" value="{{ patient.contact }}" required><br>
+
+        <label>Attending physician</label>
+        <input type="text" name="attendingPhysician" value="{{ patient.attendingPhysician }}" required><br>
+
+        <button type="submit">Save changes</button>
+        <a href="{{ url_for('patients') }}">Cancel</a>
+    </form>
+</body>
+</html>

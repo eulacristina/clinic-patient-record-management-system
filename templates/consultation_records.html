@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultation Records</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    
+    <a href="{{ url_for('appointments') }}">&larr; Back to appointments</a>
+    <h1>Consultation Records: {{ patient.firstName }} {{ patient.lastName }}</h1>
+
+    <form method="POST" action="{{ url_for('add_consultation_record', patient_id=patient.patient_id) }}">
+        <h3>Add Record</h3>
+
+        <label for="consultation_date">Date</label>
+        <input type="date" name="consultation_date" id="consultation_date" required>
+
+        <label for="diagnosis">Diagnosis</label>
+        <input type="text" name="diagnosis" id="diagnosis" required>
+
+        <label for="notes">Notes</label>
+        <textarea name="notes" id="notes"></textarea>
+
+        <button type="submit">Add Record</button>
+    </form>
+
+    <hr>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Diagnosis</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in records %}
+            <tr>
+                <td>{{ r.consultation_date }}</td>
+                <td>{{ r.diagnosis }}</td>
+                <td>{{ r.notes }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No consultation records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

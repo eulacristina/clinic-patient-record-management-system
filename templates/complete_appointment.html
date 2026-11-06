@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Appointment</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    
+    <h1>Complete Appointment</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <p>
+        Patient: <strong>{{ appointment.firstName }} {{ appointment.lastName }}</strong><br>
+        Date: {{ appointment.appointment_date }} at {{ appointment.appointment_time }}
+    </p>
+
+    <form method="POST">
+        <label for="notes">Visit notes (non-sensitive)</label><br>
+        <textarea name="notes" id="notes" rows="5" cols="50" required></textarea><br>
+        <button type="submit">Complete and save visit</button>
+        <a href="{{ url_for('appointments') }}">Cancel</a>
+    </form>
+</body>
+</html>

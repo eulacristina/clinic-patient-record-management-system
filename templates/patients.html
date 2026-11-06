@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <h1>Patients</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="GET" action="{{ url_for('patients') }}">
+        <input type="text" name="q" value="{{ q }}" placeholder="Search by name or code">
+        <button type="submit">Search</button>
+        {% if q %}<a href="{{ url_for('patients') }}">Clear</a>{% endif %}
+    </form>
+
+    {% if patients %}
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Code</th><th>Name</th><th>Age</th><th>Gender</th>
+            <th>Contact</th><th>Physician</th><th>Actions</th>
+        </tr>
+        {% for p in patients %}
+        <tr>
+            <td>{{ p.patient_code }}</td>
+            <td>{{ p.firstName }} {{ p.lastName }}</td>
+            <td>{{ p.age }}</td>
+            <td>{{ p.gender }}</td>
+            <td>{{ p.contact }}</td>
+            <td>{{ p.attendingPhysician }}</td>
+            <td>
+                <a href="{{ url_for('edit_patient', patient_id=p.patient_id) }}">Edit</a> |
+                <a href="{{ url_for('visit_history', patient_id=p.patient_id) }}">History</a> |
+                <form method="POST" action="{{ url_for('delete_patient', patient_id=p.patient_id) }}"
+                      style="display:inline;" onsubmit="return confirm('Delete this patient?');">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No patients found.</p>
+    {% endif %}
+</body>
+</html>

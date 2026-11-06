@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Patient Recording System{% endblock %}</title>
+</head>
+<body>
+    {% if session.user_id %}
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a> |
+        <a href="{{ url_for('patients') }}">Patients</a> |
+        <a href="{{ url_for('register') }}">Register Patient</a> |
+        <a href="{{ url_for('appointments') }}">Appointments</a> |
+        <a href="{{ url_for('consultation_records_index') }}">Consultation Records</a> |
+        Logged in as <strong>{{ session.username }}</strong> |
+        <a href="{{ url_for('logout') }}">Log out</a>
+    </nav>
+    <hr>
+    {% endif %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</body>
+</html>

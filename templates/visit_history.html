@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit History</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    
+    <h1>Visit History</h1>
+
+    <p><a href="{{ url_for('appointments') }}">Back to appointments</a></p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <p>
+        Patient: <strong>{{ patient.firstName }} {{ patient.lastName }}</strong>
+        ({{ patient.patient_code }})
+    </p>
+
+    <p>
+        Total: {{ stats.total }} |
+        Completed: {{ stats.completed }} |
+        Scheduled: {{ stats.scheduled }} |
+        Cancelled: {{ stats.cancelled }}<br>
+        Last completed visit: {{ last_visit if last_visit else 'None yet' }}
+    </p>
+
+    {% if visits %}
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Visit Notes</th>
+        </tr>
+        {% for v in visits %}
+        <tr>
+            <td>{{ v.appointment_date }}</td>
+            <td>{{ v.appointment_time }}</td>
+            <td>{{ v.appointment_status }}</td>
+            <td>{{ v.notes if v.notes else '—' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No appointments recorded for this patient.</p>
+    {% endif %}
+</body>
+</html>

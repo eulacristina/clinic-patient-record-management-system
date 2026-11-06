@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include 'nav.html' %}
+    <h1>Appointments</h1>
+
+    <!-- Add appointment -->
+    <form method="POST" action="{{ url_for('appointments') }}">
+        <h3>Add Appointment</h3>
+
+        <label for="patient_id">Patient</label>
+        <select name="patient_id" id="patient_id" required>
+            <option value="" disabled selected>Select a patient</option>
+            {% for p in patients %}
+            <option value="{{ p.patient_id }}">
+                {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
+            </option>
+            {% endfor %}
+        </select>
+
+        <label for="appointment_date">Date</label>
+        <input type="date" name="appointment_date" id="appointment_date" required>
+
+        <label for="appointment_time">Time</label>
+        <input type="time" name="appointment_time" id="appointment_time" required>
+
+        <button type="submit">Add Appointment</button>
+    </form>
+
+    <hr>
+    <input type="search" id="searchInput" placeholder="Search by patient name, physician, or status..." oninput="searchAppointments()">
+    <button onclick="searchAppointments()">Search</button>
+
+    <table id="appointmentsTable">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Appointment Date</th>
+            <th>Appointment Time</th>
+            <th>Attending Physician</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.firstName }} {{ appointment.lastName }}</td>
+            <td>{{ appointment.appointment_date }}</td>
+            <td>{{ appointment.appointment_time }}</td>
+            <td>{{ appointment.attending_physician }}</td>
+            <td>{{ appointment.appointment_status }}</td>
+            <td>
+                <a href="{{ url_for('update_appointment', appointment_id=appointment.appointment_id) }}">
+                    <button type="button">Update</button>
+                </a>
+
+                <form method="POST"
+                      action="{{ url_for('delete_appointment', appointment_id=appointment.appointment_id) }}"
+                      style="display:inline;"
+                      onsubmit="return confirm('Delete this appointment?');">
+                    <button type="submit">Delete</button>
+                </form>
+
+                {% if appointment.appointment_status == 'Scheduled' %}
+                    <a href="{{ url_for('complete_appointment', appointment_id=appointment.appointment_id) }}">Complete</a>
+                {% endif %}
+
+                <a href="{{ url_for('consultation_records', patient_id=appointment.patient_id) }}">
+                    <button type="button">Records</button>
+                </a>
+
+                <a href="{{ url_for('visit_history', patient_id=appointment.patient_id) }}">
+                    <button type="button">History</button>
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No appointments yet.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+        function searchAppointments() {
+            const filter = document.getElementById('searchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#appointmentsTable tbody tr');
+
+            rows.forEach(row => {
+                // Skip the "No appointments yet" row
+                if (row.cells.length < 2) return;
+
+                // Search patient name, physician, and status
+                const text = (
+                    row.cells[0].textContent + ' ' +
+                    row.cells[3].textContent + ' ' +
+                    row.cells[4].textContent
+                ).toLowerCase();
+
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
