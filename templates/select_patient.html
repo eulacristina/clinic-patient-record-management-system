@@ -11,22 +11,16 @@
     <h1>Consultation Records</h1>
     <p>Choose a patient:</p>
     <ul>
-        {% for p in patients %}
-        <li>
-            <a href="{{ url_for('consultation_records', patient_id=p.patient_id) }}">
-                {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
-            </a>
-        </li>
-        {% else %}
-        <li>No patients registered yet.</li>
-        {% endfor %}
-
-        <li>
-            <a href="{{ url_for('consultation_records', patient_id=p.patient_id) }}">
-                {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
-            </a>
-            | <a href="{{ url_for('visit_history', patient_id=p.patient_id) }}">History</a>
-        </li>
-    </ul>
+    {% for p in patients %}
+    <li>
+        <a href="{{ url_for('consultation_records', patient_id=p.patient_id) }}">
+            {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
+        </a>
+        | <a href="{{ url_for('visit_history', patient_id=p.patient_id) }}">History</a>
+    </li>
+    {% else %}
+    <li>No patients registered yet.</li>
+    {% endfor %}
+</ul>
 </body>
 </html>
