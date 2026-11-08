@@ -2692,3 +2692,246 @@ body {
         text-align: center;
     }
 }
+
+/* ===== TOP NAVIGATION BAR ===== */
+
+body > div form {
+    display: inline-block !important;
+    margin: 5px 3px;
+}
+
+body > div form input[type="submit"] {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 7px;
+    background-color: #243b73;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+/* Hover effect */
+body > div form input[type="submit"]:hover {
+    background-color: #405b9b;
+    transform: translateY(-2px);
+}
+
+/* Click effect */
+body > div form input[type="submit"]:active {
+    transform: scale(0.97);
+}
+
+ N/* ===== CLINIC TOP NAVBAR ===== */
+
+.top-navbar {
+    display: flex !important;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 15px 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #dce3ed;
+}
+
+/* Remove default form design from navbar forms */
+.top-navbar form {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Navbar buttons */
+.top-navbar input[type="submit"] {
+    display: block !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 10px 16px !important;
+    background: transparent !important;
+    color: #17365d !important;
+    border: none !important;
+    border-radius: 7px !important;
+    font-family: inherit;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Hover: whole button changes color */
+.top-navbar input[type="submit"]:hover {
+    background: #17365d !important;
+    color: #ffffff !important;
+}
+
+/* Click effect */
+.top-navbar input[type="submit"]:active {
+    background: #285b91 !important;
+    color: #ffffff !important;
+}
+
+@media (max-width: 600px) {
+    .top-navbar {
+        padding: 12px 15px;
+        gap: 5px;
+    }
+
+    .top-navbar input[type="submit"] {
+        padding: 9px 12px !important;
+        font-size: 13px !important;
+    }
+}
+.top-navbar {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: yellow !important;
+    padding: 20px !important;
+}
+
+.top-navbar form {
+    display: inline-block !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.top-navbar input[type="submit"] {
+    width: auto !important;
+    margin: 0 !important;
+    background: navy !important;
+    color: white !important;
+}
+/* NAVIGATION ONLY - DO NOT AFFECT OTHER HTML */
+body nav:not(.top-navbar) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 25px;
+    background: #ffffff;
+    border-bottom: 1px solid #dce3ed;
+}
+
+body nav:not(.top-navbar) a {
+    display: inline-block;
+    padding: 10px 15px;
+    color: #17365d !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    border-radius: 7px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+body nav:not(.top-navbar) a:hover {
+    background: #17365d !important;
+    color: #ffffff !important;
+}
+/* NAVIGATION BAR BOX */
+body nav:not(.top-navbar) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin: 20px auto;
+    padding: 15px 20px;
+    width: 90%;
+    background: #ffffff;
+    border: 1px solid #dce3ed;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* NAVIGATION BUTTONS */
+body nav:not(.top-navbar) a {
+    display: inline-block;
+    padding: 10px 15px;
+    color: #17365d !important;
+    background: #f1f5fa !important;
+    text-decoration: none !important;
+    border-radius: 7px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+/* HOVER */
+body nav:not(.top-navbar) a:hover {
+    background: #17365d !important;
+    color: #ffffff !important;
+}
+/* INDIVIDUAL NAVIGATION BUTTONS */
+body nav:not(.top-navbar) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    background: transparent;
+    border: none;
+}
+
+/* EACH NAVIGATION BOX */
+body nav:not(.top-navbar) a {
+    display: inline-block;
+    padding: 11px 18px;
+    background: #f1f5fa !important;
+    color: #17365d !important;
+    text-decoration: none !important;
+    border: 1px solid #dce3ed;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+}
+
+/* HOVER EFFECT */
+body nav:not(.top-navbar) a:hover {
+    background: #17365d !important;
+    color: #ffffff !important;
+    border-color: #17365d;
+    box-shadow: 0 3px 8px rgba(23, 54, 93, 0.2);
+    transform: translateY(-2px);
+}
+/* QUICK ACTIONS - KEEP TEXT READABLE */
+.quick-actions a,
+.quick-actions button {
+    color: #17365d !important;
+    background: #f1f5fa !important;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.quick-actions a:hover,
+.quick-actions button:hover {
+    background: #17365d !important;
+    color: #ffffff !important;
+}
+
+/* WHEN CLICKED OR SELECTED */
+.quick-actions a:active,
+.quick-actions a:focus,
+.quick-actions button:active,
+.quick-actions button:focus {
+    background: #17365d !important;
+    color: #ffffff !important;
+    outline: none;
+}
+
+/* KEEP TEXT VISIBLE */
+.quick-actions a *,
+.quick-actions button * {
+    color: inherit !important;
+}
