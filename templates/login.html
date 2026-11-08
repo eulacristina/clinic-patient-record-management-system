@@ -3,6 +3,10 @@
 
 {% block title %}Login - Patient Recording System{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="login-page">
@@ -40,6 +44,8 @@
             </p>
 
             <form method="POST" action="{{ url_for('login') }}">
+
+                <a href="{{ url_for('login_google') }}" class="google-btn">Continue with Google</a>
 
                 <label for="username">Username</label>
                 <input

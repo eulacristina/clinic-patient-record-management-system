@@ -1,7 +1,10 @@
-
 {% extends "base.html" %}
 
 {% block title %}Edit Patient - Clinic Care{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='edit_patient.css') }}">
+{% endblock %}
 
 {% block content %}
 
@@ -12,6 +15,18 @@
         <h2>Edit Patient Information</h2>
         <span>Update the registered patient's details.</span>
     </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-wrap">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
 
     <div class="edit-patient-card">
 
@@ -25,14 +40,6 @@
             <strong>{{ patient.patient_code }}</strong>
             <small>This code cannot be changed.</small>
         </div>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% for category, message in messages %}
-                <div class="edit-message">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endwith %}
 
         <form method="POST">
 

@@ -1,7 +1,10 @@
-
 {% extends "base.html" %}
 
 {% block title %}Appointments - Clinic Care{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='appointments.css') }}">
+{% endblock %}
 
 {% block content %}
 
@@ -16,11 +19,15 @@
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <div class="appointment-message {{ category }}">
+        {% if messages %}
+        <div class="flash-wrap">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}" role="alert">
                 {{ message }}
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
     {% endwith %}
 
     <!-- ADD APPOINTMENT FORM -->
@@ -41,7 +48,8 @@
                     <option value="">Choose a patient</option>
 
                     {% for p in patients %}
-                    <option value="{{ p.patient_id }}">
+                    <option value="{{ p.patient_id }}"
+                            {% if selected_patient_id == p.patient_id %}selected{% endif %}>
                         {{ p.patient_code }} -
                         {{ p.firstName }} {{ p.lastName }}
                     </option>

@@ -1,0 +1,305 @@
+/* ===== APPOINTMENTS PAGE ===== */
+/* Merged from the two duplicate "APPOINTMENTS PAGE" blocks, recoloured to the
+   site's navy theme, and with resets so the global form/table/button rules in
+   base.css no longer leak into this page. */
+
+.appointments-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+/* ---------- Header ---------- */
+.appointments-header {
+    margin-bottom: 25px;
+}
+
+.appointments-header h2 {
+    font-size: 30px;
+    color: #17365d;
+    margin: 8px 0;
+}
+
+.appointments-header p {
+    color: #5f7088;
+    margin: 0;
+}
+
+/* ---------- Flash messages ---------- */
+.appointment-message {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+}
+
+.appointment-message.success {
+    background: #e3f5e9;
+    color: #21834b;
+}
+
+.appointment-message.error {
+    background: #fde8e8;
+    color: #bd3434;
+}
+
+/* ---------- Cards ---------- */
+.appointment-form-card,
+.appointments-table-card {
+    background: #ffffff;
+    padding: 25px;
+    border: 1px solid #e1e8f1;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 18px rgba(23, 54, 93, 0.07);
+}
+
+/* ---------- Schedule form ---------- */
+/* Reset the global `form` card styling so this form lays out as a grid */
+.appointment-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    align-items: end;
+    width: 100%;
+    max-width: none;
+    margin: 20px 0 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.appointment-form .form-group {
+    min-width: 0;
+}
+
+.appointment-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #34445a;
+}
+
+.appointment-form input,
+.appointment-form select {
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid #ccd5e1;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #263445;
+}
+
+.appointment-form input:focus,
+.appointment-form select:focus {
+    outline: none;
+    border-color: #3285c7;
+    box-shadow: 0 0 0 3px rgba(50, 139, 201, 0.15);
+}
+
+.schedule-btn {
+    grid-column: 1 / -1;
+    justify-self: start;
+    padding: 12px 24px;
+    background: #17365d;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.schedule-btn:hover {
+    background: #285b91;
+}
+
+/* ---------- Table ---------- */
+.table-wrapper {
+    width: 100%;
+    margin-top: 20px;
+    overflow-x: auto;
+    border: 1px solid #e1e8f1;
+    border-radius: 10px;
+}
+
+/* Reset the global `table` margin / width so it fills the wrapper */
+.appointments-table {
+    width: 100%;
+    min-width: 850px;
+    margin: 0;
+    border-collapse: collapse;
+    border-radius: 0;
+}
+
+.appointments-table th {
+    padding: 14px 16px;
+    background: #eef3fa;
+    color: #17365d;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.appointments-table td {
+    padding: 15px 16px;
+    border-bottom: 1px solid #edf1f6;
+    color: #4a5b73;
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+.appointments-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.appointments-table td strong {
+    color: #17365d;
+}
+
+/* ---------- Status badges ---------- */
+.appointment-status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: #eceff4;
+    color: #4a5b73;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.appointment-status.scheduled {
+    background: #fff2d8;
+    color: #a66b00;
+}
+
+.appointment-status.completed {
+    background: #def5e8;
+    color: #21834b;
+}
+
+.appointment-status.cancelled {
+    background: #fde8e8;
+    color: #bd3434;
+}
+
+/* ---------- Row actions ---------- */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+/* Reset the global `form` card styling for the inline Delete form.
+   This is what caused the big white box around the Delete button. */
+.action-buttons form {
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.complete-action {
+    background: #e3f5e9;
+    color: #21834b;
+}
+
+.complete-action:hover {
+    background: #21834b;
+    color: #ffffff;
+}
+
+.edit-action {
+    background: #e3edf8;
+    color: #17365d;
+}
+
+.edit-action:hover {
+    background: #17365d;
+    color: #ffffff;
+}
+
+.delete-action {
+    background: #fde8e8;
+    color: #c33d3d;
+}
+
+.delete-action:hover {
+    background: #c33d3d;
+    color: #ffffff;
+}
+
+/* ---------- Empty state ---------- */
+.empty-appointments {
+    padding: 45px 15px;
+    text-align: center;
+    color: #5f7088;
+}
+
+.empty-appointments h3 {
+    margin: 0 0 8px;
+    color: #17365d;
+}
+
+.empty-appointments p {
+    margin: 0;
+}
+
+/* ---------- Footer ---------- */
+.appointments-footer {
+    margin-top: 25px;
+    text-align: center;
+    color: #8a97a8;
+    font-size: 12px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+    .appointment-form {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 750px) {
+    .appointments-page {
+        padding: 15px;
+    }
+
+    .appointment-form {
+        grid-template-columns: 1fr;
+    }
+
+    .appointment-form-card,
+    .appointments-table-card {
+        padding: 16px;
+    }
+
+    .schedule-btn {
+        justify-self: stretch;
+    }
+}

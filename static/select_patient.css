@@ -1,0 +1,67 @@
+/* CONSULTATION PATIENT SELECTION */
+.patient-selection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.patient-selection-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #fff;
+    border: 1px solid #e5eaf1;
+    border-radius: 11px;
+    padding: 18px 22px;
+}
+
+.patient-selection-info {
+    flex: 1;
+}
+
+.patient-selection-info h3 {
+    color: #142b4a;
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+
+.patient-selection-info p {
+    color: #526174;
+    margin: 0;
+    font-size: 13px;
+}
+
+.patient-selection-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.history-btn,
+.visit-history-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 7px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.history-btn {
+    background: #244b78;
+    color: white !important;
+}
+
+.visit-history-btn {
+    background: #e6eef8;
+    color: #244b78 !important;
+}
+
+@media (max-width: 600px) {
+    .patient-selection-card {
+            flex-wrap: wrap;
+        }
+    .patient-selection-actions {
+            width: 100%;
+            flex-wrap: wrap;
+        }
+}

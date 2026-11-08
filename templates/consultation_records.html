@@ -1,7 +1,152 @@
-
 {% extends "base.html" %}
 
 {% block title %}Consultation Records - Clinic Care{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ===== CONSULTATION RECORDS PAGE (per-patient) ===== */
+/* Shared pieces (.consultation-page, .consultation-header, .back-link,
+   .records-section, .section-heading, table styles) live in base.css. */
+
+.consultation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.consultation-form-section {
+    padding: 28px;
+    background: white;
+    border: 1px solid #e5eaf1;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Reset the global `form` card styling (white box, narrow max-width, padding,
+   margin, shadow) that was making a second card inside this one. */
+.consultation-form-section form {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.consultation-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.consultation-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+}
+
+.consultation-field label {
+    margin: 0;
+    color: #26364a;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Reset global input margin so the grid gap controls spacing */
+.consultation-field input,
+.consultation-field textarea {
+    width: 100%;
+    margin: 0;
+    padding: 13px;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    color: #26364a;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.consultation-field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.consultation-field input:focus,
+.consultation-field textarea:focus {
+    outline: none;
+    border-color: #315f8c;
+    box-shadow: 0 0 0 3px rgba(49, 95, 140, 0.12);
+}
+
+/* ---------- Buttons ---------- */
+.consultation-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.consultation-reset,
+.consultation-submit {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.consultation-reset {
+    background: #e9eef5;
+    color: #26364a;
+}
+
+.consultation-reset:hover {
+    background: #d9e2ee;
+}
+
+.consultation-submit {
+    background: #244b78;
+    color: white;
+}
+
+.consultation-submit:hover {
+    background: #142b4a;
+}
+
+/* ---------- History table ---------- */
+.consultation-container .records-table-wrapper {
+    border: 1px solid #e5eaf1;
+    border-radius: 10px;
+}
+
+/* Reset the global `table` margin so it fills the card */
+.consultation-container .consultation-table {
+    margin: 0;
+    border-radius: 0;
+}
+
+@media (max-width: 650px) {
+    .consultation-form-section {
+        padding: 18px;
+    }
+
+    .consultation-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .consultation-form-actions {
+        flex-direction: column-reverse;
+    }
+}
+</style>
+{% endblock %}
 
 {% block content %}
 
@@ -13,11 +158,23 @@
         <span>Patient: {{ patient.firstName }} {{ patient.lastName }}</span>
     </div>
 
-    <a href="{{ url_for('appointments') }}" class="back-link">
-        ← Back to Appointments
+    <a href="{{ url_for('consultation_records_index') }}" class="back-link">
+        ← Back to Consultation Records
     </a>
 
     <div class="consultation-container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-wrap">
+            {% for category, message in messages %}
+            <div class="flash flash-{{ category }}" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
 
         <div class="consultation-form-section">
             <div class="section-heading">

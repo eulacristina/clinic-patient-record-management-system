@@ -1,7 +1,10 @@
-
 {% extends "base.html" %}
 
 {% block title %}Register Patient - Clinic Care{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+{% endblock %}
 
 {% block content %}
 
@@ -12,6 +15,19 @@
         <h2>Register New Patient</h2>
         <span>Enter the patient's information below.</span>
     </div>
+
+    {% if registered %}
+    <div class="register-success">
+        <div class="register-success-text">
+            <strong>Patient registered successfully.</strong>
+            <span>{{ registered.firstName }} {{ registered.lastName }} &middot; Code: {{ registered.patient_code }}</span>
+        </div>
+        <a href="{{ url_for('appointments', patient_id=registered.patient_id) }}"
+           class="register-success-btn">
+            + Schedule Appointment
+        </a>
+    </div>
+    {% endif %}
 
     <div class="register-container">
 

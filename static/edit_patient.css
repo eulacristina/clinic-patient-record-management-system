@@ -1,0 +1,140 @@
+/* EDIT PATIENT PAGE */
+.edit-patient-page {
+    width: 100%;
+}
+
+.edit-patient-card {
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 12px;
+    padding: 25px;
+    margin-top: 22px;
+}
+
+.edit-patient-heading {
+    margin-bottom: 22px;
+}
+
+.edit-patient-heading h3 {
+    color: #142b4a;
+    margin-bottom: 6px;
+}
+
+.edit-patient-heading p {
+    color: #526174;
+    font-size: 13px;
+}
+
+.patient-code-display {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: #edf3fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 22px;
+}
+
+.patient-code-display span {
+    color: #526174;
+    font-size: 12px;
+}
+
+.patient-code-display strong {
+    color: #244b78;
+    font-size: 16px;
+}
+
+.patient-code-display small {
+    color: #526174;
+}
+
+.edit-patient-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.edit-field label {
+    color: #142b4a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.edit-field input,
+.edit-field select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #d6dfeb;
+    border-radius: 7px;
+    color: #24364b;
+    background: #ffffff;
+    font-size: 14px;
+}
+
+.edit-field input:focus,
+.edit-field select:focus {
+    outline: none;
+    border-color: #315f8c;
+    box-shadow: 0 0 0 3px rgba(49,95,140,0.10);
+}
+
+.edit-patient-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 28px;
+}
+
+.edit-save-btn,
+.edit-cancel-btn {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.edit-save-btn {
+    background: #244b78;
+    color: #ffffff;
+}
+
+.edit-save-btn:hover {
+    background: #142b4a;
+}
+
+.edit-cancel-btn {
+    background: #e6eef8;
+    color: #244b78;
+}
+
+.edit-message {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 7px;
+    background: #edf3fa;
+    color: #244b78;
+}
+
+@media (max-width: 600px) {
+    .edit-patient-grid {
+            grid-template-columns: 1fr;
+        }
+    .edit-patient-actions {
+            flex-direction: column-reverse;
+        }
+    .edit-save-btn,
+    .edit-cancel-btn {
+            text-align: center;
+        }
+}

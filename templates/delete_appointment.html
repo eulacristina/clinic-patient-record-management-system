@@ -3,6 +3,10 @@
 
 {% block title %}Delete Appointment - Clinic Care{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='delete_appointment.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="delete-appointment-page">

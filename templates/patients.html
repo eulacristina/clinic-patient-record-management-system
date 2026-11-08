@@ -3,6 +3,10 @@
 
 {% block title %}Patient Records - Clinic Care{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='patients.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="patients-page">

@@ -3,6 +3,10 @@
 
 {% block title %}Home - Patient Recording System{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+{% endblock %}
+
 {% block content %}
 
 <div class="dashboard">
@@ -22,43 +26,31 @@
         <div class="dashboard-card">
             <div class="card-icon">👥</div>
             <h3>Total Patients</h3>
-            <h2>{{ total_patients }}</h2>
+            <h2>{{ patients|length }}</h2>
             <p>Registered patients</p>
-            <a href="{{ url_for('patients') }}">View Patients →</a>
         </div>
 
         <div class="dashboard-card">
             <div class="card-icon">📅</div>
             <h3>Total Appointments</h3>
-            <h2>{{ total_appointments }}</h2>
+            <h2>{{ appointments|length }}</h2>
             <p>All recorded appointments</p>
-            <a href="{{ url_for('appointments') }}">View Appointments →</a>
         </div>
 
         <div class="dashboard-card">
             <div class="card-icon">✅</div>
             <h3>Completed Appointments</h3>
-            <h2>{{ completed_appointments }}</h2>
+            <h2>{{ completed_appointments|length }}</h2>
             <p>Successfully completed</p>
-            <a href="{{ url_for('appointments') }}">View Records →</a>
         </div>
 
         <div class="dashboard-card">
             <div class="card-icon">📋</div>
             <h3>Consultation Records</h3>
-            <h2>{{ total_consultations }}</h2>
+            <h2>{{ consultations|length }}</h2>
             <p>Recorded consultations</p>
         </div>
 
-    </div>
-
-    <!-- Quick Actions -->
-    <h3 class="section-title">Quick Actions</h3>
-
-    <div class="quick-actions">
-        <a href="{{ url_for('patients') }}">👤 Manage Patients</a>
-        <a href="{{ url_for('appointments') }}">📅 Schedule Appointment</a>
-        <a href="{{ url_for('appointments') }}">📋 View Appointments</a>
     </div>
 
 </div>

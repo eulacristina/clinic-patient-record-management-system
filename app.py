@@ -1,12 +1,59 @@
 import sqlite3
 import uuid
+import os
+from dotenv import load_dotenv
+load_dotenv()
+import os
+from dotenv import load_dotenv
+load_dotenv()
+from authlib.integrations.flask_client import OAuth
+from models import get_user_by_email
+from authlib.integrations.flask_client import OAuth
 from functools import wraps
 from flask import (Flask, render_template, request, redirect,
                    url_for, abort, session, flash)
 from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
-app.secret_key = 'change-this-to-a-long-random-string'  # needed for session and flash
+app.secret_key = os.environ["SECRET_KEY"]
+oauth = OAuth(app)
+google = oauth.register(
+    name="google",
+    client_id=os.environ["GOOGLE_CLIENT_ID"],
+    client_secret=os.environ["GOOGLE_CLIENT_SECRET"],
+    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+    client_kwargs={"scope": "openid email profile"},
+)
+
+
+@app.route("/login/google")
+def login_google():
+    return google.authorize_redirect(url_for("google_callback", _external=True))
+
+
+@app.route("/auth/google/callback")
+def google_callback():
+    try:
+        token = google.authorize_access_token()
+    except Exception:
+        flash("Google sign-in failed. Please try again.", "error")
+        return redirect(url_for("login"))
+
+    info = token.get("userinfo") or {}
+    if not info.get("email") or not info.get("email_verified"):
+        flash("Your Google email could not be verified.", "error")
+        return redirect(url_for("login"))
+
+    user = get_user_by_email(info["email"])
+
+    if not user:
+        flash("This Google account is not authorized to use Clinic Care.", "error")
+        return redirect(url_for("login"))
+
+    session["user_id"] = user["user_id"]
+    session["username"] = user["username"]
+    return redirect(url_for("index"))
+app.secret_key = os.getenv('SECRET_KEY')  # needed for session and flash
 DATABASE = 'clinic.db'
 
 
@@ -63,7 +110,31 @@ def logout():
 @app.route('/home')
 @login_required
 def index():
-    return render_template('index.html')
+    db = get_db()
+    
+    patients_list = db.execute("SELECT * FROM patients").fetchall()
+    appointments_list = db.execute("SELECT * FROM appointments").fetchall()
+    
+    completed_list = db.execute(
+        "SELECT * FROM appointments WHERE appointment_status = 'Completed'"
+    ).fetchall()
+    
+    # Updated table name from 'consultations' to 'consultation_records'
+    try:
+        consultations_list = db.execute("SELECT * FROM consultation_records").fetchall()
+    except sqlite3.OperationalError:
+        consultations_list = []
+
+    db.close()
+    
+    return render_template(
+        'index.html', 
+        patients=patients_list, 
+        appointments=appointments_list,
+        completed_appointments=completed_list,
+        consultations=consultations_list
+    )
+
 
 
 # ---------- Patients ----------
@@ -82,27 +153,41 @@ def register():
         if not firstName or not lastName or not contact or not attendingPhysician:
             flash('All fields are required.', 'error')
             return render_template('register.html')
-        if not age.isdigit() or not (0 < int(age) < 130):
-            flash('Age must be a number between 1 and 129.', 'error')
+        if not age.isdigit() or not (0 < int(age) < 100):
+            flash('Age must be a number between 1 and 99.', 'error')
             return render_template('register.html')
 
         patient_code = 'PT-' + uuid.uuid4().hex[:8].upper()
         db = get_db()
+        new_id = None
         try:
-            db.execute(
+            cur = db.execute(
                 "INSERT INTO patients (patient_code, firstName, lastName, age, gender, contact, attendingPhysician) "
                 "VALUES (?, ?, ?, ?, ?, ?, ?)",
                 (patient_code, firstName, lastName, int(age), gender, contact, attendingPhysician)
             )
             db.commit()
-            flash(f'Patient registered. Code: {patient_code}', 'success')
+            new_id = cur.lastrowid
         except sqlite3.IntegrityError:
             db.rollback()
             flash('Could not save: that patient code already exists. Try again.', 'error')
         finally:
             db.close()
+        if new_id:
+            # Show the "patient registered" card with a Schedule Appointment button
+            return redirect(url_for('register', registered=new_id))
         return redirect(url_for('register'))
-    return render_template('register.html')
+
+    registered = None
+    reg_id = request.args.get('registered', type=int)
+    if reg_id:
+        db = get_db()
+        registered = db.execute(
+            "SELECT patient_id, patient_code, firstName, lastName FROM patients WHERE patient_id = ?",
+            (reg_id,)
+        ).fetchone()
+        db.close()
+    return render_template('register.html', registered=registered)
 
 @app.route('/patients')
 @login_required
@@ -149,9 +234,9 @@ def edit_patient(patient_id):
             db.close()
             flash('All fields are required.', 'error')
             return redirect(url_for('edit_patient', patient_id=patient_id))
-        if not age.isdigit() or not (0 < int(age) < 130):
+        if not age.isdigit() or not (0 < int(age) < 100):
             db.close()
-            flash('Age must be a number between 1 and 129.', 'error')
+            flash('Age must be a number between 1 and 99.', 'error')
             return redirect(url_for('edit_patient', patient_id=patient_id))
 
         try:
@@ -233,7 +318,11 @@ def appointments():
         ORDER BY a.appointment_date, a.appointment_time
     """).fetchall()
 
-    return render_template('appointments.html', patients=patients, appointments=rows)
+    # Pre-select a patient when arriving from the "Schedule Appointment" button
+    selected_patient_id = request.args.get('patient_id', type=int)
+
+    return render_template('appointments.html', patients=patients, appointments=rows,
+                           selected_patient_id=selected_patient_id)
 
 
 @app.route('/update_appointment/<int:appointment_id>', methods=['GET', 'POST'])
@@ -244,7 +333,7 @@ def update_appointment(appointment_id):
     if request.method == 'POST':
         if request.form['appointment_status'] == 'Completed':
             db.close()
-            flash('Use the Complete button to complete an appointment.', 'error')
+            flash('Cannot update. Appointment is already completed.', 'error')
             return redirect(url_for('appointments'))
         try:
             db.execute(

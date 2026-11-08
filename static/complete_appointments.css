@@ -1,0 +1,206 @@
+/* =================================
+   COMPLETE APPOINTMENT PAGE
+================================= */
+.complete-page {
+    max-width: 950px;
+    margin: auto;
+    padding: 35px 25px;
+}
+
+.complete-header {
+    margin-bottom: 28px;
+}
+
+.complete-header h2 {
+    color: #173b60;
+    font-size: 29px;
+    margin: 0 0 10px;
+}
+
+.complete-header > p:last-child {
+    color: #8291a3;
+    font-size: 14px;
+}
+
+.complete-card {
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(25,54,90,.07);
+}
+
+.complete-card-title {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    margin-bottom: 30px;
+}
+
+.complete-icon {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7f2fb;
+    color: #1d6194;
+    border-radius: 13px;
+    font-size: 28px;
+}
+
+.complete-card-title h3 {
+    color: #173b60;
+    margin: 0 0 7px;
+    font-size: 20px;
+}
+
+.complete-card-title p {
+    color: #8291a3;
+    font-size: 13px;
+    margin: 0;
+}
+
+/* APPOINTMENT INFORMATION */
+.appointment-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.info-item {
+    background: #f3f7fb;
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 3px solid #2878b4;
+}
+
+.info-item span {
+    display: block;
+    color: #8291a3;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.info-item strong {
+    color: #234666;
+    font-size: 14px;
+}
+
+.form-divider {
+    border-top: 1px solid #e9eef4;
+    margin: 30px 0;
+}
+
+/* VISIT NOTES */
+.complete-form {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.complete-form label {
+    display: block;
+    margin: 0;
+    color: #234666;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.field-description {
+    color: #8291a3;
+    font-size: 13px;
+    margin: 5px 0 15px;
+}
+
+.complete-form textarea {
+    width: 100%;
+    min-height: 160px;
+    resize: vertical;
+    margin: 0;
+    padding: 15px;
+    border: 1px solid #dce5ef;
+    background: #f8fafd;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.complete-form textarea:focus {
+    outline: none;
+    border-color: #2878b4;
+}
+
+/* ACTIONS */
+.complete-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.complete-btn {
+    background: #1d5685;
+    color: white;
+    padding: 14px 22px;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.complete-btn:hover {
+    background: #123a60;
+}
+
+.cancel-btn {
+    background: #edf2f7;
+    color: #52657a;
+    padding: 14px 22px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.cancel-btn:hover {
+    background: #dfe8f1;
+}
+
+.complete-footer {
+    text-align: center;
+    color: #9aa8b7;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+@media (max-width: 650px) {
+    .complete-page {
+            padding: 22px 14px;
+        }
+    .complete-card {
+            padding: 22px 17px;
+        }
+    .appointment-info {
+            grid-template-columns: 1fr;
+        }
+    .complete-header h2 {
+            font-size: 24px;
+        }
+    .complete-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    .complete-btn,
+    .cancel-btn {
+            text-align: center;
+            width: 100%;
+        }
+}

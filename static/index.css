@@ -1,0 +1,299 @@
+/* HOME DASHBOARD */
+.dashboard {
+    padding: 35px;
+    background: #f4f7fb;
+    min-height: 80vh;
+}
+
+.welcome-section {
+    background: #142b4a;
+    color: white;
+    padding: 40px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+}
+
+.welcome-label {
+    color: #a9c7ee;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.welcome-section h2 {
+    font-size: 30px;
+    margin: 12px 0;
+}
+
+.welcome-section p {
+    line-height: 1.6;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border: 1px solid #e5eaf1;
+}
+
+.card-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.dashboard-card h3 {
+    color: #142b4a;
+    margin-bottom: 10px;
+}
+
+.dashboard-card p {
+    color: #68778a;
+    line-height: 1.5;
+    min-height: 48px;
+}
+
+.dashboard-card a {
+    display: inline-block;
+    margin-top: 15px;
+    background: #244b78;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 7px;
+    text-decoration: none;
+}
+
+.dashboard-card a:hover {
+    background: #142b4a;
+}
+
+/* IMPROVED DASHBOARD LAYOUT */
+.dashboard {
+    max-width: 1350px;
+    margin: 0 auto;
+    padding: 30px 35px;
+    background: #f3f6fb;
+    min-height: 85vh;
+}
+
+.welcome-section {
+    display: block;
+    background: linear-gradient(120deg, #142b4a, #285887);
+    color: white;
+    padding: 30px 35px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px rgba(20, 43, 74, 0.12);
+}
+
+.welcome-section h2 {
+    font-size: 26px;
+    margin: 10px 0;
+}
+
+.welcome-section p {
+    color: #e0eaf5;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px solid #e5eaf1;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.04);
+    min-height: 230px;
+}
+
+.dashboard-card h3 {
+    font-size: 16px;
+    color: #142b4a;
+}
+
+.dashboard-card h2 {
+    font-size: 30px;
+    color: #244b78;
+    margin: 15px 0;
+}
+
+.dashboard-card p {
+    font-size: 14px;
+    color: #718096;
+}
+
+@media (max-width: 900px) {
+    .dashboard-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+}
+
+@media (max-width: 550px) {
+    .dashboard-cards {
+            grid-template-columns: 1fr;
+        }
+    .dashboard {
+            padding: 20px;
+        }
+}
+
+/* DASHBOARD DESIGN */
+.dashboard {
+    padding: 30px 35px;
+    background: #f3f6fb;
+    min-height: 85vh;
+}
+
+.welcome-section {
+    background: linear-gradient(120deg, #142b4a, #315f8c);
+    color: white;
+    padding: 35px;
+    border-radius: 14px;
+    margin-bottom: 30px;
+}
+
+.welcome-section .welcome-label {
+    color: #b8d4f2;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.welcome-section h2 {
+    font-size: 27px;
+    margin: 12px 0;
+}
+
+.welcome-section p {
+    color: #e0eaf5;
+}
+
+.section-title {
+    color: #142b4a;
+    margin: 25px 0 18px;
+    font-size: 20px;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: white;
+    padding: 23px;
+    border-radius: 12px;
+    border: 1px solid #e5eaf1;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+}
+
+.dashboard-card h3 {
+    color: #142b4a;
+    font-size: 16px;
+}
+
+.dashboard-card h2 {
+    color: #285887;
+    font-size: 30px;
+    margin: 15px 0;
+}
+
+.dashboard-card p {
+    color: #718096;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.dashboard-card a {
+    color: #285887;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.dashboard-card a:hover {
+    color: #142b4a;
+}
+
+@media (max-width: 1000px) {
+    .dashboard-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+}
+
+@media (max-width: 600px) {
+    .dashboard-cards {
+            grid-template-columns: 1fr;
+        }
+}
+
+.dashboard {
+    color: #26364a;
+}
+
+.dashboard-card h3,
+.section-title {
+    color: #142b4a;
+    font-weight: 700;
+}
+
+.dashboard-card h2 {
+    color: #1d4773;
+    font-weight: 700;
+}
+
+.dashboard-card p {
+    color: #526174;
+}
+
+.welcome-section p {
+    color: #e8f0fa;
+}
+
+/* FIX TEXT CONTRAST */
+.welcome-section h2 {
+    color: #ffffff !important;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.welcome-section .welcome-label {
+    color: #c9e2ff !important;
+}
+
+.welcome-section > p:last-child {
+    color: #ffffff !important;
+}
+
+.dashboard-card h3 {
+    color: #142b4a !important;
+}
+
+.dashboard-card h2 {
+    color: #1d4773 !important;
+}
+
+.dashboard-card p {
+    color: #526174 !important;
+}
+
+.dashboard-card a {
+    background: #244b78 !important;
+    color: #ffffff !important;
+    padding: 11px 17px;
+    border-radius: 7px;
+    display: inline-block;
+    text-decoration: none;
+}
+

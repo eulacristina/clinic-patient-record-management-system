@@ -1,0 +1,215 @@
+/* ===== REGISTER PATIENT PAGE ===== */
+
+.register-page {
+    background: #f3f6fb;
+    min-height: 85vh;
+    padding: 30px 35px;
+}
+
+/* ---------- Header banner ---------- */
+.register-header {
+    background: linear-gradient(120deg, #142b4a, #315f8c);
+    padding: 30px 35px;
+    border-radius: 14px;
+    color: white;
+    max-width: 1000px;
+    margin: 0 auto 25px;
+}
+
+.register-header p {
+    margin: 0;
+    color: #c9e2ff;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.register-header h2 {
+    color: white;
+    font-size: 27px;
+    margin: 10px 0;
+}
+
+.register-header span {
+    color: #e8f0fa;
+}
+
+/* ---------- Success card (after registering) ---------- */
+.register-success {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto 25px;
+    padding: 18px 24px;
+    background: #e3f5e9;
+    border: 1px solid #bfe6cd;
+    border-radius: 12px;
+}
+
+.register-success-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #21834b;
+}
+
+.register-success-text span {
+    color: #3d6b52;
+    font-size: 14px;
+}
+
+.register-success-btn {
+    padding: 11px 20px;
+    background: #244b78;
+    color: #ffffff;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+}
+
+.register-success-btn:hover {
+    background: #142b4a;
+    color: #ffffff;
+}
+
+/* ---------- Form card ---------- */
+.register-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 30px;
+    background: white;
+    border: 1px solid #e5eaf1;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.form-heading {
+    padding-bottom: 18px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e5eaf1;
+}
+
+.form-heading h3 {
+    margin: 0;
+    color: #142b4a;
+    font-size: 20px;
+}
+
+.form-heading p {
+    margin: 6px 0 0;
+    color: #526174;
+}
+
+/* Reset the global `form` card styling (white box, 430-650px max-width,
+   padding, margin, shadow) that was making a second card inside the card. */
+.patient-form {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.patient-form .form-group {
+    min-width: 0;
+}
+
+.patient-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #142b4a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Reset the global input margin (22px bottom) so the grid gap controls spacing */
+.patient-form input,
+.patient-form select {
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid #d6dfeb;
+    border-radius: 8px;
+    color: #24364b;
+    font-size: 14px;
+}
+
+.patient-form input:focus,
+.patient-form select:focus {
+    outline: none;
+    border-color: #315f8c;
+    box-shadow: 0 0 0 3px rgba(49, 95, 140, 0.12);
+}
+
+/* ---------- Actions ---------- */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid #e5eaf1;
+}
+
+.reset-btn,
+.register-btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.reset-btn {
+    background: #e9eef5;
+    color: #26364a;
+}
+
+.reset-btn:hover {
+    background: #d9e2ee;
+}
+
+.register-btn {
+    background: #244b78;
+    color: white;
+}
+
+.register-btn:hover {
+    background: #142b4a;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 650px) {
+    .register-page {
+        padding: 20px;
+    }
+
+    .register-container {
+        padding: 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+}

@@ -1,5 +1,12 @@
 import sqlite3
 
+
+def get_connection():
+    conn = sqlite3.connect('clinic.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
 def init_db():
     conn = sqlite3.connect('clinic.db')
     cursor = conn.cursor()
@@ -9,7 +16,8 @@ def init_db():
                 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_code TEXT NOT NULL UNIQUE,
                 username TEXT NOT NULL,
-                password TEXT NOT NULL
+                password TEXT NOT NULL,
+                email TEXT
             )
         ''')
 
@@ -62,8 +70,26 @@ def init_db():
         )
     """)
 
+    # Add the email column to an existing users table (safe to run every time)
+    cursor.execute("PRAGMA table_info(users)")
+    columns = [row[1] for row in cursor.fetchall()]
+    if "email" not in columns:
+        cursor.execute("ALTER TABLE users ADD COLUMN email TEXT")
+    cursor.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_email ON users(email)")
+
     conn.commit()
     conn.close()
+
+
+def get_user_by_email(email):
+    conn = get_connection()
+    user = conn.execute(
+        "SELECT user_id, username FROM users WHERE LOWER(email) = LOWER(?)",
+        (email,),
+    ).fetchone()
+    conn.close()
+    return user
+
 
 if __name__ == '__main__':
     init_db()

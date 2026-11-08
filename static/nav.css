@@ -1,0 +1,164 @@
+/* Must match your page background (body background in base.css) */
+:root {
+    --page-bg: #f3f6fb;
+}
+
+/* ===== LAYOUT ===== */
+body.has-sidebar {
+    display: flex;
+    min-height: 100vh;
+    margin: 0;
+}
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ===== SIDEBAR ===== */
+.site-nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    flex: 0 0 250px;
+    width: 250px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 14px;
+    background: linear-gradient(160deg, #162a4b 0%, #25497a 60%, #2f5a89 100%);
+    color: #ffffff;
+}
+
+/* ===== BRAND ===== */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 8px 26px;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.nav-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #1b3558;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+}
+
+/* ===== LINKS ===== */
+.nav-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+.nav-links a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 28px 12px 14px;
+    margin-right: -14px;              /* reach the sidebar edge */
+    border-radius: 12px 0 0 12px;
+    color: #c7d9f2;
+    font-weight: 500;
+    text-decoration: none;
+}
+.nav-icon svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+}
+
+/* Active tab: merges into the page, with curved corners */
+.nav-links a.active {
+    background: var(--page-bg);
+    color: #1b3558;
+    font-weight: 600;
+}
+.nav-links a.active::before,
+.nav-links a.active::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+.nav-links a.active::before {
+    top: -20px;
+    background: radial-gradient(circle at 0 0, transparent 20px, var(--page-bg) 20.5px);
+}
+.nav-links a.active::after {
+    bottom: -20px;
+    background: radial-gradient(circle at 0 100%, transparent 20px, var(--page-bg) 20.5px);
+}
+
+/* ===== USER AREA ===== */
+.nav-user {
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14px;
+}
+.nav-username {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #c7d9f2;
+}
+.nav-username strong { color: #ffffff; }
+.nav-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.nav-logout {
+    text-align: center;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+}
+.nav-logout:hover { background: rgba(255, 255, 255, 0.12); }
+
+/* ===== MOBILE ===== */
+@media (max-width: 800px) {
+    body.has-sidebar { flex-direction: column; }
+    .site-nav {
+        position: static;
+        height: auto;
+        width: auto;
+        flex-basis: auto;
+    }
+    .nav-links a { margin-right: 0; border-radius: 12px; }
+    .nav-links a.active::before,
+    .nav-links a.active::after { display: none; }
+}

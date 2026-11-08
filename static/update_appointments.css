@@ -1,0 +1,169 @@
+/* ===== UPDATE APPOINTMENT PAGE ===== */
+
+/* Centered column; banner, back link and card all share this width */
+.edit-appointment-page {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px 35px;
+}
+
+.edit-appointment-page .back-link {
+    display: inline-block;
+    margin: 4px 0 4px;
+}
+
+/* ---------- Card ---------- */
+.edit-appointment-card {
+    margin-top: 22px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.edit-appointment-heading {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e5eaf1;
+}
+
+.edit-appointment-heading h3 {
+    margin: 0 0 6px;
+    color: #142b4a;
+    font-size: 20px;
+}
+
+.edit-appointment-heading p {
+    margin: 0;
+    color: #526174;
+    font-size: 14px;
+}
+
+/* ---------- Form ---------- */
+/* Reset the global `form` card styling (white box, narrow max-width,
+   padding, margin, shadow) so the form fills the card. */
+.edit-appointment-card form {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.appointment-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.appointment-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+}
+
+.appointment-edit-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.appointment-edit-field label {
+    margin: 0;
+    color: #142b4a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Reset global input margin so the grid gap controls spacing */
+.appointment-edit-field input,
+.appointment-edit-field select {
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid #d6dfeb;
+    border-radius: 8px;
+    color: #24364b;
+    font-size: 14px;
+}
+
+.appointment-edit-field input:focus,
+.appointment-edit-field select:focus {
+    outline: none;
+    border-color: #315f8c;
+    box-shadow: 0 0 0 3px rgba(49, 95, 140, 0.12);
+}
+
+/* ---------- Actions ---------- */
+.appointment-edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #e5eaf1;
+}
+
+.appointment-update-btn,
+.appointment-cancel-btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.appointment-update-btn {
+    background: #244b78;
+    color: #ffffff;
+}
+
+.appointment-update-btn:hover {
+    background: #142b4a;
+}
+
+.appointment-cancel-btn {
+    background: #e6eef8;
+    color: #244b78;
+}
+
+.appointment-cancel-btn:hover {
+    background: #d5e2f1;
+    color: #244b78;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 650px) {
+    .edit-appointment-page {
+        padding: 20px;
+    }
+
+    .edit-appointment-card {
+        padding: 20px;
+    }
+
+    .appointment-edit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .appointment-edit-field.full-width {
+        grid-column: auto;
+    }
+
+    .appointment-edit-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+}

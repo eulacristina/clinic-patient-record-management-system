@@ -1,0 +1,284 @@
+/* =================================
+   PATIENT RECORDS PAGE
+================================= */
+.patients-page {
+    padding: 35px;
+    max-width: 1500px;
+    margin: auto;
+}
+
+.patients-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.patients-header h2 {
+    margin: 0;
+    font-size: 30px;
+    color: #173b60;
+}
+
+.page-description {
+    color: #8291a3;
+    font-size: 14px;
+    margin-top: 9px;
+}
+
+.add-patient-btn {
+    background: #1d5685;
+    color: white;
+    padding: 13px 20px;
+    text-decoration: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.add-patient-btn:hover {
+    background: #123a60;
+    color: white;
+}
+
+/* STAT CARD */
+.patient-stats {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: white;
+    padding: 22px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 220px;
+    box-shadow: 0 5px 20px rgba(25, 54, 90, .05);
+}
+
+.stat-icon {
+    background: #e7f2fb;
+    color: #1d6194;
+    border-radius: 12px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.stat-card p {
+    color: #8291a3;
+    font-size: 13px;
+    margin: 0 0 5px;
+}
+
+.stat-card h3 {
+    color: #173b60;
+    font-size: 24px;
+    margin: 0;
+}
+
+/* PATIENT CONTENT */
+.patient-content {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(25, 54, 90, .05);
+}
+
+.patient-table-header h3 {
+    color: #173b60;
+    margin: 0;
+    font-size: 20px;
+}
+
+.patient-table-header p {
+    color: #8291a3;
+    font-size: 13px;
+    margin: 8px 0 20px;
+}
+
+/* SEARCH */
+.patient-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: none;
+    width: 100%;
+    padding: 0;
+    margin: 0 0 25px;
+    background: transparent;
+    box-shadow: none;
+    flex-wrap: wrap;
+}
+
+.patient-search input {
+    flex: 1;
+    min-width: 180px;
+    margin: 0;
+}
+
+.patient-search button {
+    margin: 0;
+    background: #1d5685;
+}
+
+.clear-search {
+    color: #1d5685;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* TABLE */
+.patient-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.patient-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+    margin: 0;
+    background: white;
+}
+
+.patient-table th {
+    background: #edf4fa;
+    color: #365675;
+    padding: 16px 13px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.patient-table td {
+    padding: 17px 13px;
+    color: #52657a;
+    font-size: 13px;
+}
+
+.patient-table td strong {
+    color: #253e5a;
+}
+
+.patient-code {
+    background: #e8f3fc;
+    color: #1d6194;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ACTION BUTTONS */
+.patient-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.patient-actions a,
+.patient-actions button {
+    text-decoration: none;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.action-edit {
+    background: #e6f2fc;
+    color: #216a9e;
+}
+
+.action-history {
+    background: #e8f5ef;
+    color: #28845c;
+}
+
+.action-delete {
+    background: #fff0f0;
+    color: #c44747;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-form:hover .action-delete {
+    background: #981e1e;
+    color: white;
+}
+
+.action-history:hover {
+    background: #397e2d;
+    color: white;
+}
+
+.action-edit:hover {
+    background: #2d4f7e;
+    color: white;
+}
+
+
+.patient-actions .delete-form {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* EMPTY STATE */
+.empty-patients {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-icon {
+    font-size: 45px;
+    color: #8baecb;
+}
+
+.empty-patients h3 {
+    color: #173b60;
+}
+
+.empty-patients p {
+    color: #8291a3;
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .patients-page {
+            padding: 20px 14px;
+        }
+    .patients-header h2 {
+            font-size: 24px;
+        }
+    .patient-content {
+            padding: 16px;
+        }
+    .stat-card {
+            width: 100%;
+        }
+    .add-patient-btn {
+            width: 100%;
+            text-align: center;
+        }
+}
+
+.empty-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+

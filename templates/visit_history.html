@@ -1,7 +1,176 @@
-
 {% extends "base.html" %}
 
 {% block title %}Visit History - Clinic Care{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ===== VISIT HISTORY PAGE ===== */
+
+/* Centered column; banner, back link, cards and table share this width */
+.visit-history-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 35px;
+}
+
+.visit-history-page .back-link {
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/* ---------- Patient card ---------- */
+.visit-patient-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 22px 0;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 11px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.visit-patient-card h3 {
+    margin: 4px 0;
+    color: #142b4a;
+}
+
+.visit-patient-card p {
+    margin: 0;
+    color: #526174;
+    font-size: 13px;
+}
+
+.visit-patient-card .visit-label {
+    color: #315f8c;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* ---------- Flash message ---------- */
+.visit-message {
+    margin: 12px 0;
+    padding: 12px 15px;
+    background: #edf3fa;
+    color: #244b78;
+    border-radius: 7px;
+}
+
+/* ---------- Stat cards ---------- */
+.visit-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.visit-stat-card {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.visit-stat-card p {
+    margin: 0;
+    color: #526174;
+    font-size: 13px;
+}
+
+.visit-stat-card h2 {
+    margin: 8px 0 0;
+    color: #244b78;
+    font-size: 26px;
+}
+
+/* ---------- History table card ---------- */
+.visit-content {
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 11px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.last-visit {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0;
+    padding: 15px;
+    background: #edf3fa;
+    border-radius: 8px;
+    color: #244b78;
+}
+
+.last-visit strong {
+    color: #142b4a;
+}
+
+/* Reset the global `table` margin/width so it fills the card */
+.visit-content .records-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e5eaf1;
+    border-radius: 10px;
+}
+
+.visit-content .consultation-table {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+}
+
+/* ---------- Status badges ---------- */
+.visit-status {
+    display: inline-block;
+    padding: 5px 12px;
+    background: #e6eef8;
+    color: #244b78;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.visit-status.scheduled {
+    background: #fff2d8;
+    color: #a66b00;
+}
+
+.visit-status.completed {
+    background: #def5e8;
+    color: #21834b;
+}
+
+.visit-status.cancelled {
+    background: #fde8e8;
+    color: #bd3434;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 700px) {
+    .visit-history-page {
+        padding: 20px 15px;
+    }
+
+    .visit-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .visit-content {
+        padding: 14px;
+    }
+
+    .visit-patient-card {
+        padding: 16px;
+    }
+}
+</style>
+{% endblock %}
 
 {% block content %}
 
@@ -13,8 +182,8 @@
         <span>View the patient's previous appointments and visit records.</span>
     </div>
 
-    <a href="{{ url_for('appointments') }}" class="back-link">
-        ← Back to Appointments
+    <a href="{{ url_for('consultation_records_index') }}" class="back-link">
+        ← Back to Consultation Records
     </a>
 
     <div class="visit-patient-card">
@@ -28,14 +197,6 @@
             <p>Patient Code: {{ patient.patient_code }}</p>
         </div>
     </div>
-
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <div class="visit-message">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endwith %}
 
     <div class="visit-stats">
 
@@ -92,7 +253,7 @@
                         <td>{{ v.appointment_date }}</td>
                         <td>{{ v.appointment_time }}</td>
                         <td>
-                            <span class="visit-status">
+                            <span class="visit-status {{ v.appointment_status|lower }}">
                                 {{ v.appointment_status }}
                             </span>
                         </td>

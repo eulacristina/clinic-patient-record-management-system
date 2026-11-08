@@ -4,29 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Patient Recording System{% endblock %}</title>
- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
+    <style>
+        /* ===== FLASH MESSAGES (all pages) ===== */
+        .flash-wrap {
+            max-width: 1100px;
+            margin: 20px auto 0;
+            padding: 0 35px;
+        }
+        .flash {
+            margin-bottom: 10px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .flash-success { background: #e3f5e9; color: #21834b; }
+        .flash-error   { background: #fde8e8; color: #bd3434; }
+        .flash-info    { background: #e8f0fa; color: #244b78; }
+        @media (max-width: 650px) { .flash-wrap { padding: 0 20px; } }
+    </style>
+
+    {% block extra_css %}{% endblock %}
 </head>
 
-<body>
+<body class="{{ 'has-sidebar' if session.user_id }}">
     {% if session.user_id %}
-    <nav>
-        <a href="{{ url_for('index') }}">Home</a> |
-        <a href="{{ url_for('patients') }}">Patients</a> |
-        <a href="{{ url_for('register') }}">Register Patient</a> |
-        <a href="{{ url_for('appointments') }}">Appointments</a> |
-        <a href="{{ url_for('consultation_records_index') }}">Consultation Records</a> |
-        Logged in as <strong>{{ session.username }}</strong> |
-        <a href="{{ url_for('logout') }}">Log out</a>
-    </nav>
-    <hr>
+    {% set ep = request.endpoint %}
+    <div class="site-nav" role="navigation" aria-label="Main navigation">
+
+        <a href="{{ url_for('index') }}" class="nav-brand">
+            <span class="nav-logo">✚</span>
+            Clinic Care
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="{{ url_for('index') }}"
+                   class="{{ 'active' if ep == 'index' }}">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></span>Home</a></li>
+            <li><a href="{{ url_for('patients') }}"
+                   class="{{ 'active' if ep in ['patients', 'edit_patient'] }}">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/><path d="M16 4.5a3.5 3.5 0 010 7"/><path d="M18 14.5c2 .7 3.5 2.6 3.5 5.5"/></svg></span>Patients</a></li>
+            <li><a href="{{ url_for('register') }}"
+                   class="{{ 'active' if ep == 'register' }}">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/><path d="M19 8v6M16 11h6"/></svg></span>Register Patient</a></li>
+            <li><a href="{{ url_for('appointments') }}"
+                   class="{{ 'active' if ep in ['appointments', 'update_appointment', 'complete_appointment', 'delete_appointment'] }}">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>Appointments</a></li>
+            <li><a href="{{ url_for('consultation_records_index') }}"
+                   class="{{ 'active' if ep in ['consultation_records_index', 'consultation_records', 'add_consultation_record'] }}">
+                <span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6z"/><path d="M14 2v5h5M9 13h7M9 17h7"/></svg></span>Consultation Records</a></li>
+        </ul>
+
+        <div class="nav-user">
+            <div class="nav-username">
+                <span class="nav-avatar">{{ session.username[0] }}</span>
+                <span><span class="nav-label">Logged in as </span><strong>{{ session.username }}</strong></span>
+            </div>
+            <a href="{{ url_for('logout') }}" class="nav-logout">Log out</a>
+        </div>
+
+    </div>
     {% endif %}
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
-        {% endfor %}
-    {% endwith %}
+    <div class="main-content">
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="flash-wrap">
+              {% for category, message in messages %}
+                <div class="flash flash-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %} -->
 
-    {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
 </body>
 </html>

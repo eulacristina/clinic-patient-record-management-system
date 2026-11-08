@@ -2,18 +2,23 @@
         <form action="{{ url_for('index') }}" method="get" style="display:inline;">
         <input type="submit" class="btn-home" value="Home">
     </form>
+    
     <form action="{{ url_for('patients') }}" method="get" style="display:inline;">
         <input type="submit" class="btn-patients" value="Patients">
     </form>
+
     <form action="{{ url_for('register') }}" method="get" style="display:inline;">
         <input type="submit" class="btn-register" value="Register">
     </form>
+
     <form action="{{ url_for('appointments') }}" method="get" style="display:inline;">
         <input type="submit" class="btn-appointments" value="Appointments">
     </form>
+
     <form action="{{ url_for('consultation_records_index') }}" method="get" style="display:inline;">
         <input type="submit" class="btn-consultation" value="Consultation Records">
     </form>
+
     <form action="{{ url_for('logout') }}" method="get" style="display:inline;">
         <input type="submit" class="btn-logout" value="Log out">
     </form>

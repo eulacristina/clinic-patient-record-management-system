@@ -1,0 +1,107 @@
+/* VISIT HISTORY PAGE */
+.visit-history-page {
+    width: 100%;
+}
+
+.visit-patient-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 11px;
+    padding: 20px;
+    margin: 22px 0;
+}
+
+.visit-patient-card h3 {
+    color: #142b4a;
+    margin: 4px 0;
+}
+
+.visit-patient-card p {
+    color: #526174;
+    font-size: 13px;
+}
+
+.visit-label {
+    color: #315f8c !important;
+    font-size: 11px !important;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.visit-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.visit-stat-card {
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.visit-stat-card p {
+    color: #526174;
+    font-size: 13px;
+}
+
+.visit-stat-card h2 {
+    color: #244b78;
+    font-size: 26px;
+    margin-top: 8px;
+}
+
+.visit-content {
+    background: #ffffff;
+    border: 1px solid #e5eaf1;
+    border-radius: 11px;
+    padding: 22px;
+}
+
+.last-visit {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: #edf3fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 18px 0;
+    color: #244b78;
+}
+
+.last-visit strong {
+    color: #142b4a;
+}
+
+.visit-status {
+    display: inline-block;
+    background: #e6eef8;
+    color: #244b78;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.visit-message {
+    background: #edf3fa;
+    color: #244b78;
+    padding: 12px 15px;
+    border-radius: 7px;
+    margin: 12px 0;
+}
+
+@media (max-width: 700px) {
+    .visit-stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    .visit-content {
+            padding: 14px;
+        }
+}
