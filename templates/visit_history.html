@@ -1,55 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visit History</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    
-    <h1>Visit History</h1>
 
-    <p><a href="{{ url_for('appointments') }}">Back to appointments</a></p>
+{% extends "base.html" %}
+
+{% block title %}Visit History - Clinic Care{% endblock %}
+
+{% block content %}
+
+<div class="visit-history-page">
+
+    <div class="consultation-header">
+        <p>CLINIC MANAGEMENT SYSTEM</p>
+        <h2>Visit History</h2>
+        <span>View the patient's previous appointments and visit records.</span>
+    </div>
+
+    <a href="{{ url_for('appointments') }}" class="back-link">
+        ← Back to Appointments
+    </a>
+
+    <div class="visit-patient-card">
+        <div class="patient-avatar">
+            {{ patient.firstName[0] }}{{ patient.lastName[0] }}
+        </div>
+
+        <div>
+            <p class="visit-label">PATIENT INFORMATION</p>
+            <h3>{{ patient.firstName }} {{ patient.lastName }}</h3>
+            <p>Patient Code: {{ patient.patient_code }}</p>
+        </div>
+    </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% for category, message in messages %}
-            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
+            <div class="visit-message">
+                {{ message }}
+            </div>
         {% endfor %}
     {% endwith %}
 
-    <p>
-        Patient: <strong>{{ patient.firstName }} {{ patient.lastName }}</strong>
-        ({{ patient.patient_code }})
-    </p>
+    <div class="visit-stats">
 
-    <p>
-        Total: {{ stats.total }} |
-        Completed: {{ stats.completed }} |
-        Scheduled: {{ stats.scheduled }} |
-        Cancelled: {{ stats.cancelled }}<br>
-        Last completed visit: {{ last_visit if last_visit else 'None yet' }}
-    </p>
+        <div class="visit-stat-card">
+            <p>Total Visits</p>
+            <h2>{{ stats.total }}</h2>
+        </div>
 
-    {% if visits %}
-    <table border="1" cellpadding="6">
-        <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Visit Notes</th>
-        </tr>
-        {% for v in visits %}
-        <tr>
-            <td>{{ v.appointment_date }}</td>
-            <td>{{ v.appointment_time }}</td>
-            <td>{{ v.appointment_status }}</td>
-            <td>{{ v.notes if v.notes else '—' }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-        <p>No appointments recorded for this patient.</p>
-    {% endif %}
-</body>
-</html>
+        <div class="visit-stat-card">
+            <p>Completed</p>
+            <h2>{{ stats.completed }}</h2>
+        </div>
+
+        <div class="visit-stat-card">
+            <p>Scheduled</p>
+            <h2>{{ stats.scheduled }}</h2>
+        </div>
+
+        <div class="visit-stat-card">
+            <p>Cancelled</p>
+            <h2>{{ stats.cancelled }}</h2>
+        </div>
+
+    </div>
+
+    <div class="visit-content">
+
+        <div class="section-heading">
+            <h3>Appointment History</h3>
+            <p>Records of the patient's previous and upcoming visits.</p>
+        </div>
+
+        <div class="last-visit">
+            <span>Last Completed Visit</span>
+            <strong>{{ last_visit if last_visit else 'None yet' }}</strong>
+        </div>
+
+        {% if visits %}
+
+        <div class="records-table-wrapper">
+            <table class="consultation-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Visit Notes</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for v in visits %}
+                    <tr>
+                        <td>{{ v.appointment_date }}</td>
+                        <td>{{ v.appointment_time }}</td>
+                        <td>
+                            <span class="visit-status">
+                                {{ v.appointment_status }}
+                            </span>
+                        </td>
+                        <td>{{ v.notes if v.notes else '—' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+        <div class="empty-records">
+            <h3>No Visit History</h3>
+            <p>No appointments recorded for this patient.</p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

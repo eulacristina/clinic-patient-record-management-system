@@ -1,31 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Appointment</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    
-    <h1>Complete Appointment</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
-        {% endfor %}
-    {% endwith %}
+{% extends "base.html" %}
 
-    <p>
-        Patient: <strong>{{ appointment.firstName }} {{ appointment.lastName }}</strong><br>
-        Date: {{ appointment.appointment_date }} at {{ appointment.appointment_time }}
+{% block title %}Complete Appointment - Clinic Care{% endblock %}
+
+{% block content %}
+
+<div class="complete-page">
+
+    <div class="complete-header">
+        <p class="page-label">CLINIC MANAGEMENT</p>
+        <h2>Complete Appointment</h2>
+        <p>Finalize the patient's appointment and save visit information.</p>
+    </div>
+
+    <div class="complete-card">
+
+        <div class="complete-card-title">
+            <div class="complete-icon">✚</div>
+            <div>
+                <h3>Appointment Details</h3>
+                <p>Review patient information before completing the visit.</p>
+            </div>
+        </div>
+
+        <div class="appointment-info">
+            <div class="info-item">
+                <span>Patient Name</span>
+                <strong>{{ appointment.firstName }} {{ appointment.lastName }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Appointment Date</span>
+                <strong>{{ appointment.appointment_date }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Appointment Time</span>
+                <strong>{{ appointment.appointment_time }}</strong>
+            </div>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <form method="POST" class="complete-form">
+            <label for="notes">Visit Notes</label>
+
+            <p class="field-description">
+                Enter the necessary non-sensitive visit notes.
+            </p>
+
+            <textarea
+                name="notes"
+                id="notes"
+                rows="7"
+                placeholder="Write visit notes here..."
+                required
+            ></textarea>
+
+            <div class="complete-actions">
+                <button type="submit" class="complete-btn">
+                    ✓ Complete and Save Visit
+                </button>
+
+                <a href="{{ url_for('appointments') }}" class="cancel-btn">
+                    Cancel
+                </a>
+            </div>
+        </form>
+
+    </div>
+
+    <p class="complete-footer">
+        Patient Recording System | Clinic Care
     </p>
+S
+</div>
 
-    <form method="POST">
-        <label for="notes">Visit notes (non-sensitive)</label><br>
-        <textarea name="notes" id="notes" rows="5" cols="50" required></textarea><br>
-        <button type="submit">Complete and save visit</button>
-        <a href="{{ url_for('appointments') }}">Cancel</a>
-    </form>
-</body>
-</html>
+{% endblock %}

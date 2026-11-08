@@ -1,47 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Patient</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    
-    <h1>Edit Patient</h1>
-    <p>Code: <strong>{{ patient.patient_code }}</strong> (cannot be changed)</p>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
-        {% endfor %}
-    {% endwith %}
+{% extends "base.html" %}
 
-    <form method="POST">
-        <label>First name</label>
-        <input type="text" name="firstName" value="{{ patient.firstName }}" required><br>
+{% block title %}Edit Patient - Clinic Care{% endblock %}
 
-        <label>Last name</label>
-        <input type="text" name="lastName" value="{{ patient.lastName }}" required><br>
+{% block content %}
 
-        <label>Age</label>
-        <input type="number" name="age" value="{{ patient.age }}" min="1" max="129" required><br>
+<div class="edit-patient-page">
 
-        <label>Gender</label>
-        <select name="gender">
-            {% for g in ['Male', 'Female', 'Other'] %}
-            <option value="{{ g }}" {{ 'selected' if patient.gender == g }}>{{ g }}</option>
+    <div class="consultation-header">
+        <p>CLINIC MANAGEMENT SYSTEM</p>
+        <h2>Edit Patient Information</h2>
+        <span>Update the registered patient's details.</span>
+    </div>
+
+    <div class="edit-patient-card">
+
+        <div class="edit-patient-heading">
+            <h3>Patient Details</h3>
+            <p>Update the information below and save your changes.</p>
+        </div>
+
+        <div class="patient-code-display">
+            <span>Patient Code</span>
+            <strong>{{ patient.patient_code }}</strong>
+            <small>This code cannot be changed.</small>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="edit-message">
+                    {{ message }}
+                </div>
             {% endfor %}
-        </select><br>
+        {% endwith %}
 
-        <label>Contact</label>
-        <input type="text" name="contact" value="{{ patient.contact }}" required><br>
+        <form method="POST">
 
-        <label>Attending physician</label>
-        <input type="text" name="attendingPhysician" value="{{ patient.attendingPhysician }}" required><br>
+            <div class="edit-patient-grid">
 
-        <button type="submit">Save changes</button>
-        <a href="{{ url_for('patients') }}">Cancel</a>
-    </form>
-</body>
-</html>
+                <div class="edit-field">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName"
+                           value="{{ patient.firstName }}" required>
+                </div>
+
+                <div class="edit-field">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName"
+                           value="{{ patient.lastName }}" required>
+                </div>
+
+                <div class="edit-field">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age"
+                           value="{{ patient.age }}" min="1" max="129" required>
+                </div>
+
+                <div class="edit-field">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        {% for g in ['Male', 'Female', 'Other'] %}
+                        <option value="{{ g }}" {{ 'selected' if patient.gender == g else '' }}>
+                            {{ g }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="edit-field">
+                    <label for="contact">Contact</label>
+                    <input type="text" id="contact" name="contact"
+                           value="{{ patient.contact }}" required>
+                </div>
+
+                <div class="edit-field">
+                    <label for="attendingPhysician">Attending Physician</label>
+                    <input type="text" id="attendingPhysician"
+                           name="attendingPhysician"
+                           value="{{ patient.attendingPhysician }}" required>
+                </div>
+
+            </div>
+
+            <div class="edit-patient-actions">
+                <a href="{{ url_for('patients') }}" class="edit-cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit" class="edit-save-btn">
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

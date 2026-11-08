@@ -1,40 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    
-    <h1>Update Appointment</h1>
-    <a href="{{ url_for('appointments') }}">&larr; Back to appointments</a>
 
-    <form method="POST" action="{{ url_for('update_appointment', appointment_id=appointment.appointment_id) }}">
-        <label for="patient_id">Patient</label>
-        <select name="patient_id" id="patient_id" required>
-            {% for p in patients %}
-            <option value="{{ p.patient_id }}" {% if p.patient_id == appointment.patient_id %}selected{% endif %}>
-                {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
-            </option>
-            {% endfor %}
-        </select>
+{% extends "base.html" %}
 
-        <label for="appointment_date">Date</label>
-        <input type="date" name="appointment_date" id="appointment_date" value="{{ appointment.appointment_date }}" required>
+{% block title %}Update Appointment - Clinic Care{% endblock %}
 
-        <label for="appointment_time">Time</label>
-        <input type="time" name="appointment_time" id="appointment_time" value="{{ appointment.appointment_time }}" required>
+{% block content %}
 
-        <label for="appointment_status">Status</label>
-        <select name="appointment_status" id="appointment_status" required>
-            <option value="Scheduled" {% if appointment.appointment_status == 'Scheduled' %}selected{% endif %}>Scheduled</option>
-            <option value="Completed" {% if appointment.appointment_status == 'Completed' %}selected{% endif %}>Completed</option>
-            <option value="Cancelled" {% if appointment.appointment_status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
-        </select>
+<div class="edit-appointment-page">
 
-        <button type="submit">Update Appointment</button>
-    </form>
-</body>
-</html>
+    <div class="consultation-header">
+        <p>CLINIC MANAGEMENT SYSTEM</p>
+        <h2>Update Appointment</h2>
+        <span>Modify the patient's appointment information.</span>
+    </div>
+
+    <a href="{{ url_for('appointments') }}" class="back-link">
+        ← Back to Appointments
+    </a>
+
+    <div class="edit-appointment-card">
+
+        <div class="edit-appointment-heading">
+            <h3>Appointment Details</h3>
+            <p>Update the information below.</p>
+        </div>
+
+        <form method="POST"
+              action="{{ url_for('update_appointment', appointment_id=appointment.appointment_id) }}">
+
+            <div class="appointment-edit-grid">
+
+                <div class="appointment-edit-field full-width">
+                    <label for="patient_id">Patient</label>
+                    <select name="patient_id" id="patient_id" required>
+                        {% for p in patients %}
+                        <option value="{{ p.patient_id }}"
+                            {% if p.patient_id == appointment.patient_id %}selected{% endif %}>
+                            {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="appointment-edit-field">
+                    <label for="appointment_date">Appointment Date</label>
+                    <input type="date"
+                           name="appointment_date"
+                           id="appointment_date"
+                           value="{{ appointment.appointment_date }}"
+                           required>
+                </div>
+
+                <div class="appointment-edit-field">
+                    <label for="appointment_time">Appointment Time</label>
+                    <input type="time"
+                           name="appointment_time"
+                           id="appointment_time"
+                           value="{{ appointment.appointment_time }}"
+                           required>
+                </div>
+
+                <div class="appointment-edit-field full-width">
+                    <label for="appointment_status">Appointment Status</label>
+                    <select name="appointment_status"
+                            id="appointment_status"
+                            required>
+                        <option value="Scheduled"
+                            {% if appointment.appointment_status == 'Scheduled' %}selected{% endif %}>
+                            Scheduled
+                        </option>
+
+                        <option value="Completed"
+                            {% if appointment.appointment_status == 'Completed' %}selected{% endif %}>
+                            Completed
+                        </option>
+
+                        <option value="Cancelled"
+                            {% if appointment.appointment_status == 'Cancelled' %}selected{% endif %}>
+                            Cancelled
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="appointment-edit-actions">
+                <a href="{{ url_for('appointments') }}" class="appointment-cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit" class="appointment-update-btn">
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

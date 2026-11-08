@@ -1,51 +1,114 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Consultation Records</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    
-    <a href="{{ url_for('appointments') }}">&larr; Back to appointments</a>
-    <h1>Consultation Records: {{ patient.firstName }} {{ patient.lastName }}</h1>
 
-    <form method="POST" action="{{ url_for('add_consultation_record', patient_id=patient.patient_id) }}">
-        <h3>Add Record</h3>
+{% extends "base.html" %}
 
-        <label for="consultation_date">Date</label>
-        <input type="date" name="consultation_date" id="consultation_date" required>
+{% block title %}Consultation Records - Clinic Care{% endblock %}
 
-        <label for="diagnosis">Diagnosis</label>
-        <input type="text" name="diagnosis" id="diagnosis" required>
+{% block content %}
 
-        <label for="notes">Notes</label>
-        <textarea name="notes" id="notes"></textarea>
+<div class="consultation-page">
 
-        <button type="submit">Add Record</button>
-    </form>
+    <div class="consultation-header">
+        <p>CLINIC MANAGEMENT SYSTEM</p>
+        <h2>Consultation Records</h2>
+        <span>Patient: {{ patient.firstName }} {{ patient.lastName }}</span>
+    </div>
 
-    <hr>
+    <a href="{{ url_for('appointments') }}" class="back-link">
+        ← Back to Appointments
+    </a>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Diagnosis</th>
-                <th>Notes</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for r in records %}
-            <tr>
-                <td>{{ r.consultation_date }}</td>
-                <td>{{ r.diagnosis }}</td>
-                <td>{{ r.notes }}</td>
-            </tr>
-            {% else %}
-            <tr><td colspan="3">No consultation records yet.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+    <div class="consultation-container">
+
+        <div class="consultation-form-section">
+            <div class="section-heading">
+                <h3>Add Consultation Record</h3>
+                <p>Enter the patient's consultation details.</p>
+            </div>
+
+            <form method="POST"
+                  action="{{ url_for('add_consultation_record', patient_id=patient.patient_id) }}">
+
+                <div class="consultation-form-grid">
+
+                    <div class="consultation-field">
+                        <label for="consultation_date">Consultation Date</label>
+                        <input type="date"
+                               name="consultation_date"
+                               id="consultation_date"
+                               required>
+                    </div>
+
+                    <div class="consultation-field">
+                        <label for="diagnosis">Diagnosis</label>
+                        <input type="text"
+                               name="diagnosis"
+                               id="diagnosis"
+                               placeholder="Enter diagnosis"
+                               required>
+                    </div>
+
+                    <div class="consultation-field full-width">
+                        <label for="notes">Notes</label>
+                        <textarea name="notes"
+                                  id="notes"
+                                  rows="4"
+                                  placeholder="Enter consultation notes..."></textarea>
+                    </div>
+
+                </div>
+
+                <div class="consultation-form-actions">
+                    <button type="reset" class="consultation-reset">
+                        Clear Form
+                    </button>
+
+                    <button type="submit" class="consultation-submit">
+                        + Add Record
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="records-section">
+
+            <div class="section-heading">
+                <h3>Consultation History</h3>
+                <p>Previously recorded patient consultations.</p>
+            </div>
+
+            <div class="records-table-wrapper">
+                <table class="consultation-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Diagnosis</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for r in records %}
+                        <tr>
+                            <td>{{ r.consultation_date }}</td>
+                            <td>{{ r.diagnosis or 'Not specified' }}</td>
+                            <td>{{ r.notes or 'No notes' }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="empty-records">
+                                No consultation records yet.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

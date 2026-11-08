@@ -1,53 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patients</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    <h1>Patients</h1>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
-        {% endfor %}
-    {% endwith %}
+{% extends "base.html" %}
 
-    <form method="GET" action="{{ url_for('patients') }}">
-        <input type="text" name="q" value="{{ q }}" placeholder="Search by name or code">
-        <button type="submit">Search</button>
-        {% if q %}<a href="{{ url_for('patients') }}">Clear</a>{% endif %}
-    </form>
+{% block title %}Patient Records - Clinic Care{% endblock %}
 
-    {% if patients %}
-    <table border="1" cellpadding="6">
-        <tr>
-            <th>Code</th><th>Name</th><th>Age</th><th>Gender</th>
-            <th>Contact</th><th>Physician</th><th>Actions</th>
-        </tr>
-        {% for p in patients %}
-        <tr>
-            <td>{{ p.patient_code }}</td>
-            <td>{{ p.firstName }} {{ p.lastName }}</td>
-            <td>{{ p.age }}</td>
-            <td>{{ p.gender }}</td>
-            <td>{{ p.contact }}</td>
-            <td>{{ p.attendingPhysician }}</td>
-            <td>
-                <a href="{{ url_for('edit_patient', patient_id=p.patient_id) }}">Edit</a> |
-                <a href="{{ url_for('visit_history', patient_id=p.patient_id) }}">History</a> |
-                <form method="POST" action="{{ url_for('delete_patient', patient_id=p.patient_id) }}"
-                      style="display:inline;" onsubmit="return confirm('Delete this patient?');">
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-        <p>No patients found.</p>
-    {% endif %}
-</body>
-</html>
+{% block content %}
+
+<div class="patients-page">
+
+    <div class="patients-header">
+        <div>
+            <p class="page-label">CLINIC MANAGEMENT</p>
+            <h2>Patient Records</h2>
+            <p class="page-description">
+                Manage and organize your clinic's patient information.
+            </p>
+        </div>
+
+        <a href="{{ url_for('register') }}" class="add-patient-btn">
+            + Register New Patient
+        </a>
+    </div>
+
+    <div class="patient-stats">
+        <div class="stat-card">
+            <span class="stat-icon">♙</span>
+            <div>
+                <p>Total Patients</p>
+                <h3>{{ patients|length }}</h3>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <span class="stat-icon">⌕</span>
+            <div>
+                <p>Search Results</p>
+                <h3>{{ patients|length }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="patient-content">
+
+        <div class="patient-table-header">
+            <div>
+                <h3>All Patients</h3>
+                <p>View and manage registered patients.</p>
+            </div>
+        </div>
+
+        <form method="GET" action="{{ url_for('patients') }}"
+              class="patient-search">
+
+            <input
+                type="text"
+                name="q"
+                value="{{ q }}"
+                placeholder="Search by patient name or code..."
+            >
+
+            <button type="submit">Search</button>
+
+            {% if q %}
+                <a href="{{ url_for('patients') }}" class="clear-search">
+                    Clear
+                </a>
+            {% endif %}
+
+        </form>
+
+        {% if patients %}
+
+        <div class="patient-table-wrapper">
+            <table class="patient-table">
+                <thead>
+                    <tr>
+                        <th>Patient Code</th>
+                        <th>Patient Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Contact</th>
+                        <th>Physician</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for p in patients %}
+                    <tr>
+                        <td>
+                            <span class="patient-code">
+                                {{ p.patient_code }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <strong>
+                                {{ p.firstName }} {{ p.lastName }}
+                            </strong>
+                        </td>
+
+                        <td>{{ p.age }}</td>
+                        <td>{{ p.gender }}</td>
+                        <td>{{ p.contact }}</td>
+                        <td>{{ p.attendingPhysician }}</td>
+
+                        <td>
+                            <div class="patient-actions">
+
+                                <a href="{{ url_for('edit_patient', patient_id=p.patient_id) }}"
+                                   class="action-edit">
+                                    Edit
+                                </a>
+
+                                <a href="{{ url_for('visit_history', patient_id=p.patient_id) }}"
+                                   class="action-history">
+                                    History
+                                </a>
+
+                                <form method="POST"
+                                      action="{{ url_for('delete_patient', patient_id=p.patient_id) }}"
+                                      class="delete-form"
+                                      onsubmit="return confirm('Delete this patient?');">
+
+                                    <button type="submit" class="action-delete">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+        <div class="empty-patients">
+            <div class="empty-icon">♙</div>
+            <h3>No Patients Found</h3>
+            <p>
+                {% if q %}
+                    No matching patient records. Try another search.
+                {% else %}
+                    There are currently no registered patients.
+                {% endif %}
+            </p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

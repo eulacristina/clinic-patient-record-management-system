@@ -1,109 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    <h1>Appointments</h1>
 
-    <!-- Add appointment -->
-    <form method="POST" action="{{ url_for('appointments') }}">
-        <h3>Add Appointment</h3>
+{% extends "base.html" %}
 
-        <label for="patient_id">Patient</label>
-        <select name="patient_id" id="patient_id" required>
-            <option value="" disabled selected>Select a patient</option>
-            {% for p in patients %}
-            <option value="{{ p.patient_id }}">
-                {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
-            </option>
-            {% endfor %}
-        </select>
+{% block title %}Appointments - Clinic Care{% endblock %}
 
-        <label for="appointment_date">Date</label>
-        <input type="date" name="appointment_date" id="appointment_date" required>
+{% block content %}
 
-        <label for="appointment_time">Time</label>
-        <input type="time" name="appointment_time" id="appointment_time" required>
+<div class="appointments-page">
 
-        <button type="submit">Add Appointment</button>
-    </form>
+    <div class="appointments-header">
+        <div>
+            <p class="page-label">CLINIC MANAGEMENT</p>
+            <h2>Appointments</h2>
+            <p>Manage and monitor patient appointments.</p>
+        </div>
+    </div>
 
-    <hr>
-    <input type="search" id="searchInput" placeholder="Search by patient name, physician, or status..." oninput="searchAppointments()">
-    <button onclick="searchAppointments()">Search</button>
-
-    <table id="appointmentsTable">
-    <thead>
-        <tr>
-            <th>Patient Name</th>
-            <th>Appointment Date</th>
-            <th>Appointment Time</th>
-            <th>Attending Physician</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for appointment in appointments %}
-        <tr>
-            <td>{{ appointment.firstName }} {{ appointment.lastName }}</td>
-            <td>{{ appointment.appointment_date }}</td>
-            <td>{{ appointment.appointment_time }}</td>
-            <td>{{ appointment.attending_physician }}</td>
-            <td>{{ appointment.appointment_status }}</td>
-            <td>
-                <a href="{{ url_for('update_appointment', appointment_id=appointment.appointment_id) }}">
-                    <button type="button">Update</button>
-                </a>
-
-                <form method="POST"
-                      action="{{ url_for('delete_appointment', appointment_id=appointment.appointment_id) }}"
-                      style="display:inline;"
-                      onsubmit="return confirm('Delete this appointment?');">
-                    <button type="submit">Delete</button>
-                </form>
-
-                {% if appointment.appointment_status == 'Scheduled' %}
-                    <a href="{{ url_for('complete_appointment', appointment_id=appointment.appointment_id) }}">Complete</a>
-                {% endif %}
-
-                <a href="{{ url_for('consultation_records', patient_id=appointment.patient_id) }}">
-                    <button type="button">Records</button>
-                </a>
-
-                <a href="{{ url_for('visit_history', patient_id=appointment.patient_id) }}">
-                    <button type="button">History</button>
-                </a>
-            </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="6">No appointments yet.</td></tr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="appointment-message {{ category }}">
+                {{ message }}
+            </div>
         {% endfor %}
-    </tbody>
-</table>
-<script>
-        function searchAppointments() {
-            const filter = document.getElementById('searchInput').value.toLowerCase();
-            const rows = document.querySelectorAll('#appointmentsTable tbody tr');
+    {% endwith %}
 
-            rows.forEach(row => {
-                // Skip the "No appointments yet" row
-                if (row.cells.length < 2) return;
+    <!-- ADD APPOINTMENT FORM -->
+    <div class="appointment-form-card">
 
-                // Search patient name, physician, and status
-                const text = (
-                    row.cells[0].textContent + ' ' +
-                    row.cells[3].textContent + ' ' +
-                    row.cells[4].textContent
-                ).toLowerCase();
+        <div class="section-heading">
+            <h3>+ Schedule New Appointment</h3>
+            <p>Enter the patient's appointment details.</p>
+        </div>
 
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
-        }
-    </script>
-</body>
-</html>
+        <form method="POST" action="{{ url_for('appointments') }}"
+              class="appointment-form">
+
+            <div class="form-group">
+                <label for="patient_id">Select Patient</label>
+
+                <select name="patient_id" id="patient_id" required>
+                    <option value="">Choose a patient</option>
+
+                    {% for p in patients %}
+                    <option value="{{ p.patient_id }}">
+                        {{ p.patient_code }} -
+                        {{ p.firstName }} {{ p.lastName }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="appointment_date">Appointment Date</label>
+                <input type="date"
+                       name="appointment_date"
+                       id="appointment_date"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="appointment_time">Appointment Time</label>
+                <input type="time"
+                       name="appointment_time"
+                       id="appointment_time"
+                       required>
+            </div>
+
+            <button type="submit" class="schedule-btn">
+                + Save Appointment
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- APPOINTMENT RECORDS -->
+    <div class="appointments-table-card">
+
+        <div class="section-heading">
+            <h3>Appointment Records</h3>
+            <p>View and manage scheduled patient visits.</p>
+        </div>
+
+        {% if appointments %}
+
+        <div class="table-wrapper">
+            <table class="appointments-table">
+
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Physician</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for a in appointments %}
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ a.firstName }} {{ a.lastName }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ a.attending_physician or 'Not assigned' }}
+                        </td>
+
+                        <td>{{ a.appointment_date }}</td>
+
+                        <td>{{ a.appointment_time }}</td>
+
+                        <td>
+                            <span class="appointment-status
+                                {{ a.appointment_status|lower }}">
+                                {{ a.appointment_status }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+
+                                {% if a.appointment_status == 'Scheduled' %}
+
+                                <a href="{{ url_for('complete_appointment', appointment_id=a.appointment_id) }}"
+                                   class="action-btn complete-action">
+                                    Complete
+                                </a>
+
+                                {% endif %}
+
+                                <a href="{{ url_for('update_appointment', appointment_id=a.appointment_id) }}"
+                                   class="action-btn edit-action">
+                                    Edit
+                                </a>
+
+                                <form method="POST"
+                                      action="{{ url_for('delete_appointment', appointment_id=a.appointment_id) }}"
+                                      onsubmit="return confirm('Are you sure you want to delete this appointment?');">
+
+                                    <button type="submit"
+                                            class="action-btn delete-action">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+        <div class="empty-appointments">
+            <h3>No Appointments Yet</h3>
+            <p>Schedule a new appointment using the form above.</p>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <p class="appointments-footer">
+        Patient Recording System | Clinic Care
+    </p>
+
+</div>
+
+{% endblock %}

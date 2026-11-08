@@ -1,26 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Select Patient</title>
-</head>
-<body>
-    {% include 'nav.html' %}
-    
-    <a href="{{ url_for('index') }}">&larr; Home</a>
-    <h1>Consultation Records</h1>
-    <p>Choose a patient:</p>
-    <ul>
-    {% for p in patients %}
-    <li>
-        <a href="{{ url_for('consultation_records', patient_id=p.patient_id) }}">
-            {{ p.firstName }} {{ p.lastName }} ({{ p.patient_code }})
-        </a>
-        | <a href="{{ url_for('visit_history', patient_id=p.patient_id) }}">History</a>
-    </li>
-    {% else %}
-    <li>No patients registered yet.</li>
-    {% endfor %}
-</ul>
-</body>
-</html>
+
+{% extends "base.html" %}
+
+{% block title %}Select Patient - Clinic Care{% endblock %}
+
+{% block content %}
+
+<div class="consultation-page">
+
+    <div class="consultation-header">
+        <p>CLINIC MANAGEMENT SYSTEM</p>
+        <h2>Consultation Records</h2>
+        <span>Choose a patient to view their consultation records.</span>
+    </div>
+
+    <div class="records-section">
+
+        <div class="section-heading">
+            <h3>Select a Patient</h3>
+            <p>Choose from the list of registered patients.</p>
+        </div>
+
+        <div class="patient-selection-list">
+
+            {% for p in patients %}
+
+            <div class="patient-selection-card">
+
+                <div class="patient-avatar">
+                    {{ p.firstName[0] }}{{ p.lastName[0] }}
+                </div>
+
+                <div class="patient-selection-info">
+                    <h3>{{ p.firstName }} {{ p.lastName }}</h3>
+                    <p>Patient Code: {{ p.patient_code }}</p>
+                </div>
+
+                <div class="patient-selection-actions">
+                    <a href="{{ url_for('consultation_records', patient_id=p.patient_id) }}"
+                       class="history-btn">
+                        Consultation →
+                    </a>
+
+                    <a href="{{ url_for('visit_history', patient_id=p.patient_id) }}"
+                       class="visit-history-btn">
+                        History
+                    </a>
+                </div>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-records">
+                No patients registered yet.
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,28 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h1>Patient Recording System</h1>
-    <h2>Login</h2>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <p style="color: {{ 'red' if category == 'error' else 'green' }};">{{ message }}</p>
-        {% endfor %}
-    {% endwith %}
+{% extends "base.html" %}
 
-    <form method="POST" action="{{ url_for('login') }}">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" required>
+{% block title %}Login - Patient Recording System{% endblock %}
 
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
+{% block content %}
 
-        <button type="submit">Log in</button>
-    </form>
-</body>
-</html>
+<div class="login-page">
+
+    <div class="login-left">
+        <div class="clinic-logo">✚</div>
+
+        <h1>CLINIC CARE</h1>
+        <p class="brand-subtitle">PATIENT RECORD MANAGEMENT SYSTEM</p>
+
+        <div class="welcome-message">
+            <h2>Welcome Back!</h2>
+            <p>
+                Manage patient records, appointments, and
+                consultation history in one secure and
+                organized platform.
+            </p>
+        </div>
+
+        <div class="medical-icon">⚕</div>
+
+        <p class="left-footer">
+            Your Health Records, Our Priority.
+        </p>
+    </div>
+
+    <div class="login-right">
+        <div class="login-card">
+
+            <div class="login-icon">✚</div>
+
+            <h2>Welcome Back</h2>
+            <p class="login-description">
+                Please sign in to access your account.
+            </p>
+
+            <form method="POST" action="{{ url_for('login') }}">
+
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    placeholder="Enter your username"
+                    required
+                >
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit" class="login-button">
+                    Sign In →
+                </button>
+
+            </form>
+
+            <p class="login-note">
+                Authorized clinic personnel only.
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

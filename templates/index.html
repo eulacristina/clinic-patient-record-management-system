@@ -1,15 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>Patient Recording System</h1>
 
-    {% include 'nav.html' %}
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Home - Patient Recording System{% endblock %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <!-- Welcome Banner -->
+    <div class="welcome-section">
+        <p class="welcome-label">CLINIC MANAGEMENT SYSTEM</p>
+        <h2>Welcome to Patient Recording System</h2>
+        <p>Manage your clinic records, patients, and appointments efficiently.</p>
+    </div>
+
+    <!-- Dashboard Statistics -->
+    <h3 class="section-title">Dashboard Overview</h3>
+
+    <div class="dashboard-cards">
+
+        <div class="dashboard-card">
+            <div class="card-icon">👥</div>
+            <h3>Total Patients</h3>
+            <h2>{{ total_patients }}</h2>
+            <p>Registered patients</p>
+            <a href="{{ url_for('patients') }}">View Patients →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">📅</div>
+            <h3>Total Appointments</h3>
+            <h2>{{ total_appointments }}</h2>
+            <p>All recorded appointments</p>
+            <a href="{{ url_for('appointments') }}">View Appointments →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">✅</div>
+            <h3>Completed Appointments</h3>
+            <h2>{{ completed_appointments }}</h2>
+            <p>Successfully completed</p>
+            <a href="{{ url_for('appointments') }}">View Records →</a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">📋</div>
+            <h3>Consultation Records</h3>
+            <h2>{{ total_consultations }}</h2>
+            <p>Recorded consultations</p>
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <h3 class="section-title">Quick Actions</h3>
+
+    <div class="quick-actions">
+        <a href="{{ url_for('patients') }}">👤 Manage Patients</a>
+        <a href="{{ url_for('appointments') }}">📅 Schedule Appointment</a>
+        <a href="{{ url_for('appointments') }}">📋 View Appointments</a>
+    </div>
+
+</div>
+
+{% endblock %}
