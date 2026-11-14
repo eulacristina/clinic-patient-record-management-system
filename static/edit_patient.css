@@ -1,28 +1,72 @@
-/* EDIT PATIENT PAGE */
 .edit-patient-page {
     width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 38px 20px;
+    box-sizing: border-box;
 }
 
+/* Banner (same look as Register Patient) */
+.edit-patient-page .consultation-header {
+    background: linear-gradient(135deg, #142b4a 0%, #2d5b8a 100%);
+    color: #ffffff;
+    padding: 40px 44px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    box-sizing: border-box;
+}
+
+.edit-patient-page .consultation-header p {
+    margin: 0 0 14px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.edit-patient-page .consultation-header h2 {
+    margin: 0 0 10px;
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.edit-patient-page .consultation-header span {
+    font-size: 17px;
+}
+
+/* Main card: full width */
 .edit-patient-card {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    box-sizing: border-box;
     background: #ffffff;
     border: 1px solid #e5eaf1;
-    border-radius: 12px;
-    padding: 25px;
-    margin-top: 22px;
+    border-radius: 16px;
+    padding: 38px;
+}
+
+.edit-patient-card form {
+    width: 100%;
+    max-width: none;
+    margin: 0;
 }
 
 .edit-patient-heading {
-    margin-bottom: 22px;
+    padding-bottom: 22px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #e5eaf1;
 }
 
 .edit-patient-heading h3 {
     color: #142b4a;
-    margin-bottom: 6px;
+    font-size: 24px;
+    margin: 0 0 8px;
 }
 
 .edit-patient-heading p {
     color: #526174;
-    font-size: 13px;
+    font-size: 16px;
+    margin: 0;
 }
 
 .patient-code-display {
@@ -30,40 +74,31 @@
     flex-direction: column;
     gap: 5px;
     background: #edf3fa;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 22px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin-bottom: 28px;
 }
 
-.patient-code-display span {
-    color: #526174;
-    font-size: 12px;
-}
-
-.patient-code-display strong {
-    color: #244b78;
-    font-size: 16px;
-}
-
-.patient-code-display small {
-    color: #526174;
-}
+.patient-code-display span { color: #526174; font-size: 12px; }
+.patient-code-display strong { color: #244b78; font-size: 17px; }
+.patient-code-display small { color: #526174; }
 
 .edit-patient-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 30px;
+    width: 100%;
 }
 
 .edit-field {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .edit-field label {
     color: #142b4a;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
 }
 
@@ -71,52 +106,44 @@
 .edit-field select {
     width: 100%;
     box-sizing: border-box;
-    padding: 12px;
+    padding: 15px 18px;
     border: 1px solid #d6dfeb;
-    border-radius: 7px;
+    border-radius: 8px;
     color: #24364b;
     background: #ffffff;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .edit-field input:focus,
 .edit-field select:focus {
     outline: none;
     border-color: #315f8c;
-    box-shadow: 0 0 0 3px rgba(49,95,140,0.10);
+    box-shadow: 0 0 0 3px rgba(49, 95, 140, 0.10);
 }
 
 .edit-patient-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 12px;
-    margin-top: 28px;
+    gap: 14px;
+    margin-top: 34px;
+    padding-top: 28px;
+    border-top: 1px solid #e5eaf1;
 }
 
 .edit-save-btn,
 .edit-cancel-btn {
-    padding: 11px 20px;
+    padding: 14px 26px;
     border: none;
-    border-radius: 7px;
-    font-size: 14px;
+    border-radius: 8px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     text-decoration: none;
 }
 
-.edit-save-btn {
-    background: #244b78;
-    color: #ffffff;
-}
-
-.edit-save-btn:hover {
-    background: #142b4a;
-}
-
-.edit-cancel-btn {
-    background: #e6eef8;
-    color: #244b78;
-}
+.edit-save-btn { background: #244b78; color: #ffffff; }
+.edit-save-btn:hover { background: #142b4a; }
+.edit-cancel-btn { background: #e6eef8; color: #244b78; }
 
 .edit-message {
     padding: 12px;
@@ -127,14 +154,8 @@
 }
 
 @media (max-width: 600px) {
-    .edit-patient-grid {
-            grid-template-columns: 1fr;
-        }
-    .edit-patient-actions {
-            flex-direction: column-reverse;
-        }
+    .edit-patient-grid { grid-template-columns: 1fr; }
+    .edit-patient-actions { flex-direction: column-reverse; }
     .edit-save-btn,
-    .edit-cancel-btn {
-            text-align: center;
-        }
+    .edit-cancel-btn { text-align: center; }
 }

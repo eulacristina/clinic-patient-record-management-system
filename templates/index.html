@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block title %}Home - Patient Recording System{% endblock %}
@@ -11,44 +10,128 @@
 
 <div class="dashboard">
 
-    <!-- Welcome Banner -->
+    <!-- Welcome banner with quick actions -->
     <div class="welcome-section">
-        <p class="welcome-label">CLINIC MANAGEMENT SYSTEM</p>
-        <h2>Welcome to Patient Recording System</h2>
-        <p>Manage your clinic records, patients, and appointments efficiently.</p>
+        <div class="welcome-text">
+            <p class="welcome-label">CLINIC MANAGEMENT SYSTEM</p>
+            <h2>Welcome back, {{ session.username }}</h2>
+            <p>{{ today }}</p>
+        </div>
+        <div class="welcome-actions">
+            <a href="{{ url_for('register') }}" class="action-btn action-primary">Register patient</a>
+            <a href="{{ url_for('appointments') }}" class="action-btn action-secondary">Schedule appointment</a>
+        </div>
     </div>
 
-    <!-- Dashboard Statistics -->
+    <!-- Statistics: each card opens its page -->
     <h3 class="section-title">Dashboard Overview</h3>
 
     <div class="dashboard-cards">
 
-        <div class="dashboard-card">
+        <a class="dashboard-card" href="{{ url_for('patients') }}">
             <div class="card-icon">👥</div>
             <h3>Total Patients</h3>
-            <h2>{{ patients|length }}</h2>
+            <h2>{{ stats.patients }}</h2>
             <p>Registered patients</p>
-        </div>
+        </a>
 
-        <div class="dashboard-card">
+        <a class="dashboard-card" href="{{ url_for('appointments') }}">
             <div class="card-icon">📅</div>
             <h3>Total Appointments</h3>
-            <h2>{{ appointments|length }}</h2>
-            <p>All recorded appointments</p>
-        </div>
+            <h2>{{ stats.total }}</h2>
+            <div class="chip-row">
+                <span class="chip chip-scheduled">{{ stats.scheduled }} scheduled</span>
+                <span class="chip chip-cancelled">{{ stats.cancelled }} cancelled</span>
+            </div>
+        </a>
 
-        <div class="dashboard-card">
+        <a class="dashboard-card" href="{{ url_for('appointments') }}">
             <div class="card-icon">✅</div>
             <h3>Completed Appointments</h3>
-            <h2>{{ completed_appointments|length }}</h2>
+            <h2>{{ stats.completed }}</h2>
             <p>Successfully completed</p>
-        </div>
+        </a>
 
-        <div class="dashboard-card">
+        <a class="dashboard-card" href="{{ url_for('consultation_records_index') }}">
             <div class="card-icon">📋</div>
             <h3>Consultation Records</h3>
-            <h2>{{ consultations|length }}</h2>
+            <h2>{{ consultations_count }}</h2>
             <p>Recorded consultations</p>
+        </a>
+
+    </div>
+
+    <!-- Work lists -->
+    <div class="dashboard-columns">
+
+        <div class="panel">
+            <div class="panel-head">
+                <h3>Today's appointments</h3>
+                <a href="{{ url_for('appointments') }}" class="panel-link">View all</a>
+            </div>
+
+            {% if today_appts %}
+            <ul class="item-list">
+                {% for a in today_appts %}
+                <li class="item">
+                    <span class="item-time">{{ a.appointment_time }}</span>
+                    <span class="item-main">
+                        <strong>{{ a.firstName }} {{ a.lastName }}</strong>
+                        <small>{{ a.attendingPhysician }}</small>
+                    </span>
+                    <span class="status status-{{ a.appointment_status|lower }}">{{ a.appointment_status }}</span>
+                    {% if a.appointment_status == 'Scheduled' %}
+                    <a class="mini-btn" href="{{ url_for('complete_appointment', appointment_id=a.appointment_id) }}">Complete</a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty">No appointments today. <a href="{{ url_for('appointments') }}">Schedule one</a>.</p>
+            {% endif %}
+
+            <div class="panel-head panel-head-sub">
+                <h3>Upcoming</h3>
+            </div>
+
+            {% if upcoming %}
+            <ul class="item-list">
+                {% for a in upcoming %}
+                <li class="item">
+                    <span class="item-time item-date">{{ a.appointment_date }}</span>
+                    <span class="item-main">
+                        <strong>{{ a.firstName }} {{ a.lastName }}</strong>
+                        <small>{{ a.appointment_time }}</small>
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty">No upcoming appointments scheduled.</p>
+            {% endif %}
+        </div>
+
+        <div class="panel">
+            <div class="panel-head">
+                <h3>Recently registered</h3>
+                <a href="{{ url_for('patients') }}" class="panel-link">All patients</a>
+            </div>
+
+            {% if recent_patients %}
+            <ul class="item-list">
+                {% for p in recent_patients %}
+                <li class="item">
+                    <span class="item-main">
+                        <strong>{{ p.firstName }} {{ p.lastName }}</strong>
+                        <small>{{ p.patient_code }}</small>
+                    </span>
+                    <a class="mini-btn mini-btn-light" href="{{ url_for('visit_history', patient_id=p.patient_id) }}">History</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="empty">No patients yet. <a href="{{ url_for('register') }}">Register the first patient</a>.</p>
+            {% endif %}
         </div>
 
     </div>
